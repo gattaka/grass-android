@@ -1,5 +1,6 @@
 package cz.gattserver.mobile;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,10 +19,27 @@ public class MainActivity extends AppCompatActivity {
 
     private String msg = "GrassAPP: ";
 
+    private void customizeActionBar() {
+        String title = "GRASS Mobile";
+
+        ActionBar ab = getActionBar();
+        if (ab != null) {
+            ab.setTitle(title);
+        }
+
+        android.support.v7.app.ActionBar ab7 = getSupportActionBar();
+        if (ab7 != null) {
+            ab7.setTitle(title);
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        customizeActionBar();
 
         List<ButtonDefinition> buttonDefinitions = new ArrayList<>();
         buttonDefinitions.add(new ButtonDefinition("Fotogalerie", new View.OnClickListener() {

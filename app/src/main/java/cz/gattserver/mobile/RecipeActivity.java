@@ -38,7 +38,7 @@ public class RecipeActivity extends AppCompatActivity {
                     nameText.setText(jsonObject.getString("name"));
 
                     TextView descriptionText = findViewById(R.id.recipeDescription);
-                    descriptionText.setText(jsonObject.getString("description").replaceAll("<br/>", "\n"));
+                    descriptionText.setText(jsonObject.getString("description").replaceAll("<br/>", "\n").replaceAll("<br>", "\n"));
                 } catch (JSONException e) {
                     Log.e(msg, "JSONObject", e);
                 }
