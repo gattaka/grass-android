@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,16 +90,9 @@ public class RecipesActivity extends GrassActivity {
             super.onPostExecute(result);
             totalCount = Integer.parseInt(result);
 
-            // create the ListView
             listView = new ListView(grassActivity);
-
-            // add a ProgressBar as ListView's footer to indicate data load
             listView.addFooterView(progressBar = new ProgressBar(grassActivity));
-
-            // create an adapter
             adapter = new ArrayAdapter<RecipeTO>(grassActivity, android.R.layout.simple_list_item_1);
-
-            // plug the adapter to the ListView
             listView.setAdapter(adapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,34 +105,22 @@ public class RecipesActivity extends GrassActivity {
                 }
             });
 
-            // set the ListView as the activity's content
-            //LinearLayout layout = grassActivity.findViewById(R.id.recipesLayout);
-            //layout.addView(listView);
             grassActivity.setContentView(listView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-            // CRUCIAL PART !! Add the LazyLoader as the onScrollListener for the ListView.
             listView.setOnScrollListener(new LazyLoader() {
-
-                // This method is called when the user is nearing the end of the ListView
-                // and the ListView is ready to add more items.
                 @Override
                 public void loadMore(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    load();
+                    Log.d(msg, "load() event");
+                    if (totalCount > currentPage * PAGE_SIZE) {
+                        FetchItemsTask fetchTask = new FetchItemsTask(grassActivity, adapter);
+                        // http://www.gattserver.cz/ws/recipes/list?pageSize=10&page=0
+                        fetchTask.execute(Config.RECIPES_LIST_RESOURCE + "?pageSize=" + PAGE_SIZE + "&page=" + currentPage);
+                        currentPage++;
+                    } else {
+                        listView.removeFooterView(progressBar);
+                    }
                 }
             });
-        }
-
-        private void load() {
-            Log.d(msg, "load() event");
-            // The ListView needs more data. So Fetch !!
-            if (totalCount > currentPage * PAGE_SIZE) {
-                FetchItemsTask fetchTask = new FetchItemsTask(grassActivity, adapter);
-                // http://www.gattserver.cz/ws/recipes/list?pageSize=10&page=0
-                fetchTask.execute(Config.RECIPES_LIST_RESOURCE + "?pageSize=" + PAGE_SIZE + "&page=" + currentPage);
-                currentPage++;
-            } else {
-                listView.removeFooterView(progressBar);
-            }
         }
     }
 
