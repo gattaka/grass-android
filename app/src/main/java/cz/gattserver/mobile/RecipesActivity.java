@@ -22,7 +22,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipesActivity extends AppCompatActivity {
+public class RecipesActivity extends GrassActivity {
 
     private String msg = "GrassAPP: ";
 
@@ -30,6 +30,8 @@ public class RecipesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
+
+        setTitle("Recepty");
 
         URLTask countTask = new URLTask() {
 

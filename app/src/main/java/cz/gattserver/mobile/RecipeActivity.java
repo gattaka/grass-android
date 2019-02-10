@@ -13,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends GrassActivity {
 
     private String msg = "GrassAPP: ";
 
@@ -21,6 +21,8 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        hideActionBar();
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
