@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -22,14 +23,37 @@ public class RecipesActivity extends GrassActivity {
     private static String msg = "GrassAPP: ";
     private static int PAGE_SIZE = 10;
 
-    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<RecipeTO> adapter;
+
+    private static class RecipeTO {
+        private String name;
+        private String id;
+
+        public RecipeTO(String name, String id) {
+            this.name = name;
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
 
     private static class FetchItemsTask extends URLTask {
 
         private GrassActivity grassActivity;
-        private ArrayAdapter<String> adapter;
+        private ArrayAdapter<RecipeTO> adapter;
 
-        public FetchItemsTask(GrassActivity grassActivity, ArrayAdapter<String> adapter) {
+        public FetchItemsTask(GrassActivity grassActivity, ArrayAdapter<RecipeTO> adapter) {
             this.grassActivity = grassActivity;
             this.adapter = adapter;
         }
@@ -41,32 +65,8 @@ public class RecipesActivity extends GrassActivity {
                 JSONArray jsonArray = new JSONArray(result);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     final JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String name = jsonObject.getString("name");
-                    adapter.add(name);
+                    adapter.add(new RecipeTO(jsonObject.getString("name"), jsonObject.getString("id")));
                 }
-                /*
-                LinearLayout layout = grassActivity.findViewById(R.id.linearLayout);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String name = jsonObject.getString("name");
-                    adapter.add(name);
-                    Button btn = new Button(grassActivity);
-                    btn.setText(name);
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            try {
-                                Intent intent = new Intent(grassActivity, RecipeActivity.class);
-                                intent.putExtra("id", jsonObject.getString("id"));
-                                grassActivity.startActivity(intent);
-                            } catch (JSONException e) {
-                                Log.e(msg, "Recipes detail switch", e);
-                            }
-                        }
-                    });
-                    layout.addView(btn);
-                }
-                */
             } catch (JSONException e) {
                 Log.e(msg, "JSONArray", e);
             }
@@ -76,13 +76,13 @@ public class RecipesActivity extends GrassActivity {
     private static class LazyLoaderTask extends URLTask {
 
         private GrassActivity grassActivity;
-        private ArrayAdapter<String> adapter;
+        private ArrayAdapter<RecipeTO> adapter;
         private ListView listView;
         private ProgressBar progressBar;
         private int totalCount = 0;
         private int currentPage = 0;
 
-        public LazyLoaderTask(GrassActivity grassActivity, ArrayAdapter<String> adapter) {
+        public LazyLoaderTask(GrassActivity grassActivity, ArrayAdapter<RecipeTO> adapter) {
             this.grassActivity = grassActivity;
             this.adapter = adapter;
         }
@@ -99,10 +99,20 @@ public class RecipesActivity extends GrassActivity {
             listView.addFooterView(progressBar = new ProgressBar(grassActivity));
 
             // create an adapter
-            adapter = new ArrayAdapter<String>(grassActivity, android.R.layout.simple_list_item_1);
+            adapter = new ArrayAdapter<RecipeTO>(grassActivity, android.R.layout.simple_list_item_1);
 
             // plug the adapter to the ListView
             listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    RecipeTO recipe = adapter.getItem(position);
+                    Intent intent = new Intent(grassActivity, RecipeActivity.class);
+                    intent.putExtra("id", recipe.getId());
+                    grassActivity.startActivity(intent);
+                }
+            });
 
             // set the ListView as the activity's content
             //LinearLayout layout = grassActivity.findViewById(R.id.recipesLayout);
