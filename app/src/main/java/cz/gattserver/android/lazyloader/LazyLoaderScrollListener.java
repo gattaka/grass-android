@@ -1,12 +1,11 @@
-package cz.gattserver.mobile;
+package cz.gattserver.android.lazyloader;
 
 import android.widget.AbsListView;
 
-public abstract class LazyLoader implements AbsListView.OnScrollListener {
+public abstract class LazyLoaderScrollListener implements AbsListView.OnScrollListener {
 
     private boolean loading = true;
     private int previousTotal = 0;
-    private int threshold = 10;
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -24,6 +23,7 @@ public abstract class LazyLoader implements AbsListView.OnScrollListener {
         }
 
         // check if the List needs more data
+        int threshold = 10;
         if (!loading && ((firstVisibleItem + visibleItemCount) >= (totalItemCount - threshold))) {
             loading = true;
 

@@ -1,4 +1,4 @@
-package cz.gattserver.mobile;
+package cz.gattserver.android;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.gattserver.android.common.ButtonDefinition;
 
 public class MainActivity extends GrassActivity {
 

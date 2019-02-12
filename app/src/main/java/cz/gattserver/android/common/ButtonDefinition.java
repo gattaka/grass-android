@@ -1,4 +1,4 @@
-package cz.gattserver.mobile;
+package cz.gattserver.android.common;
 
 import android.view.View;
 

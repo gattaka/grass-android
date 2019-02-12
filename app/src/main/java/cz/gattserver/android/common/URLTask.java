@@ -1,4 +1,4 @@
-package cz.gattserver.mobile;
+package cz.gattserver.android.common;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -25,7 +25,6 @@ public class URLTask extends AsyncTask<String, Void, String> {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuffer.append(line);
             }
-
             return stringBuffer.toString();
         } catch (Exception ex) {
             Log.e("JSONTask", "JSON fetch", ex);

@@ -1,4 +1,4 @@
-package cz.gattserver.mobile;
+package cz.gattserver.android;
 
 import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
