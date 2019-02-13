@@ -5,22 +5,22 @@ import android.content.Intent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cz.gattserver.android.interfaces.RecipeTO;
+import cz.gattserver.android.interfaces.ItemTO;
 import cz.gattserver.android.lazyloader.LazyListActivity;
 
-public class RecipesActivity extends LazyListActivity<RecipeTO> {
+public class RecipesActivity extends LazyListActivity<ItemTO> {
 
     public RecipesActivity() {
         super(R.layout.activity_recipes, "Recepty", Config.RECIPES_COUNT_RESOURCE);
     }
 
     @Override
-    protected RecipeTO constructTO(JSONObject jsonObject) throws JSONException {
-        return new RecipeTO(jsonObject.getString("name"), jsonObject.getString("id"));
+    protected ItemTO constructTO(JSONObject jsonObject) throws JSONException {
+        return new ItemTO(jsonObject.getString("name"), jsonObject.getString("id"));
     }
 
     @Override
-    protected void onItemClick(RecipeTO item) {
+    protected void onItemClick(ItemTO item) {
         Intent intent = new Intent(this, RecipeActivity.class);
         intent.putExtra("id", item.getId());
         startActivity(intent);

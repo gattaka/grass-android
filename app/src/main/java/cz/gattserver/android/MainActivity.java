@@ -15,8 +15,6 @@ import cz.gattserver.android.common.GrassActivity;
 
 public class MainActivity extends GrassActivity {
 
-    private String msg = "GrassAPP: ";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +46,8 @@ public class MainActivity extends GrassActivity {
         buttonDefinitions.add(new ButtonDefinition("Nápoje", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, DrinksActivity.class);
+                startActivity(intent);
             }
         }));
         buttonDefinitions.add(new ButtonDefinition("Táborové hry", new View.OnClickListener() {
@@ -73,6 +72,6 @@ public class MainActivity extends GrassActivity {
             mainLayout.addView(btn);
         }
 
-        Log.d(msg, "The onCreate() event");
+        Log.d("GrassAPP: ", "The onCreate() event");
     }
 }

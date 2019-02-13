@@ -1,10 +1,10 @@
 package cz.gattserver.android.interfaces;
 
-public class CampgameTO {
+public class ItemTO {
     private String name;
     private String id;
 
-    public CampgameTO(String name, String id) {
+    public ItemTO(String name, String id) {
         this.name = name;
         this.id = id;
     }

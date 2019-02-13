@@ -16,15 +16,8 @@ public class ButtonDefinition {
         return caption;
     }
 
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
-
     public View.OnClickListener getClickListener() {
         return clickListener;
     }
 
-    public void setClickListener(View.OnClickListener clickListener) {
-        this.clickListener = clickListener;
-    }
 }

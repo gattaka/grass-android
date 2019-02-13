@@ -8,10 +8,10 @@ import org.json.JSONObject;
 import cz.gattserver.android.interfaces.ItemTO;
 import cz.gattserver.android.lazyloader.LazyListActivity;
 
-public class SongsActivity extends LazyListActivity<ItemTO> {
+public class BeersActivity extends LazyListActivity<ItemTO> {
 
-    public SongsActivity() {
-        super(R.layout.activity_songs, "Zpěvník", Config.SONGS_COUNT_RESOURCE);
+    public BeersActivity() {
+        super(R.layout.activity_beers, "Piva", Config.DRINKS_BEER_COUNT_RESOURCE);
     }
 
     @Override
@@ -21,13 +21,13 @@ public class SongsActivity extends LazyListActivity<ItemTO> {
 
     @Override
     protected void onItemClick(ItemTO item) {
-        Intent intent = new Intent(this, SongActivity.class);
+        Intent intent = new Intent(this, BeerActivity.class);
         intent.putExtra("id", item.getId());
         startActivity(intent);
     }
 
     @Override
     protected String createFetchURL(int pageSize, int page) {
-        return Config.SONGS_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page;
+        return Config.DRINKS_BEER_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page;
     }
 }

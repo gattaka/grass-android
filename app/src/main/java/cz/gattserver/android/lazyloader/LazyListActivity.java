@@ -14,8 +14,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.URLTask;
 
-public abstract class LazyListActivity<T> extends GrassActivity {
+public abstract class LazyListActivity<T> extends GrassActivity implements URLTask.URLTaskClient {
 
     ListView listView;
     ProgressBar progressBar;
@@ -63,5 +64,9 @@ public abstract class LazyListActivity<T> extends GrassActivity {
         lazyLoaderTask.execute(countURL);
 
         Log.d("LazyListActivity", "The onCreate() event");
+    }
+
+    public void onSuccess(String result) {
+        // nepoužívá se
     }
 }
