@@ -54,7 +54,8 @@ public class MainActivity extends GrassActivity {
         buttonDefinitions.add(new ButtonDefinition("Táborové hry", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, CampgamesActivity.class);
+                startActivity(intent);
             }
         }));
         buttonDefinitions.add(new ButtonDefinition("SMS", new View.OnClickListener() {

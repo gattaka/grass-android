@@ -20,6 +20,8 @@
         <activity android:name="cz.gattserver.android.RecipeActivity"></activity>
         <activity android:name="cz.gattserver.android.SongsActivity"></activity>
         <activity android:name="cz.gattserver.android.SongActivity"></activity>
+        <activity android:name="cz.gattserver.android.CampgamesActivity"></activity>
+        <activity android:name="cz.gattserver.android.CampgameActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

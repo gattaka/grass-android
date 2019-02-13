@@ -36,7 +36,7 @@ public class SongActivity extends GrassActivity {
                     LinearLayout layout = findViewById(R.id.songLayout);
 
                     TextView nameText = findViewById(R.id.songName);
-                    nameText.setText(jsonObject.getString("name"));
+                    nameText.setText(jsonObject.getString("name") + " (" + jsonObject.getString("author") + ")");
 
                     TextView descriptionText = findViewById(R.id.songText);
                     descriptionText.setText(jsonObject.getString("text").replaceAll("<br/>", "\n").replaceAll("<br>", "\n"));
