@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cz.gattserver.android.GrassActivity;
+import cz.gattserver.android.common.GrassActivity;
 
 public abstract class LazyListActivity<T> extends GrassActivity {
 

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.gattserver.android.common.ButtonDefinition;
+import cz.gattserver.android.common.GrassActivity;
 
 public class MainActivity extends GrassActivity {
 
@@ -34,14 +35,14 @@ public class MainActivity extends GrassActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RecipesActivity.class);
-                intent.putExtra("GRASS EXTRA_MESSAGE", "GRASS message");
                 startActivity(intent);
             }
         }));
         buttonDefinitions.add(new ButtonDefinition("Zpěvník", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, SongsActivity.class);
+                startActivity(intent);
             }
         }));
         buttonDefinitions.add(new ButtonDefinition("Nápoje", new View.OnClickListener() {

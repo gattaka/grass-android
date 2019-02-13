@@ -16,10 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="cz.gattserver.android.RecipesActivity">
-        </activity>
-        <activity android:name="cz.gattserver.android.RecipeActivity">
-        </activity>
+        <activity android:name="cz.gattserver.android.RecipesActivity"></activity>
+        <activity android:name="cz.gattserver.android.RecipeActivity"></activity>
+        <activity android:name="cz.gattserver.android.SongsActivity"></activity>
+        <activity android:name="cz.gattserver.android.SongActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

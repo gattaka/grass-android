@@ -12,14 +12,14 @@ import org.json.JSONObject;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTask;
 
-public class RecipeActivity extends GrassActivity {
+public class SongActivity extends GrassActivity {
 
     private String msg = "GrassAPP: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe);
+        setContentView(R.layout.activity_song);
 
         hideActionBar();
 
@@ -33,20 +33,20 @@ public class RecipeActivity extends GrassActivity {
                 super.onPostExecute(result);
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-                    LinearLayout layout = findViewById(R.id.recipeLayout);
+                    LinearLayout layout = findViewById(R.id.songLayout);
 
-                    TextView nameText = findViewById(R.id.recipeName);
+                    TextView nameText = findViewById(R.id.songName);
                     nameText.setText(jsonObject.getString("name"));
 
-                    TextView descriptionText = findViewById(R.id.recipeDescription);
-                    descriptionText.setText(jsonObject.getString("description").replaceAll("<br/>", "\n").replaceAll("<br>", "\n"));
+                    TextView descriptionText = findViewById(R.id.songText);
+                    descriptionText.setText(jsonObject.getString("text").replaceAll("<br/>", "\n").replaceAll("<br>", "\n"));
                 } catch (JSONException e) {
                     Log.e(msg, "JSONObject", e);
                 }
             }
         };
-        // http://www.gattserver.cz/ws/recipes/recipe?id=4
-        fetchTask.execute(Config.RECIPE_DETAIL_RESOURCE + "?id=" + id);
+        // http://www.gattserver.cz/ws/songs/song?id=4
+        fetchTask.execute(Config.SONG_DETAIL_RESOURCE + "?id=" + id);
 
         Log.d(msg, "The onCreate() event");
     }
