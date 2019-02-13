@@ -98,10 +98,18 @@
                 android:id="@+id/beerDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
                 android:text="TextView" />
+
+            <ImageView
+                android:id="@+id/beerImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
     </ScrollView>
+
+
 
 </LinearLayout>

@@ -1,8 +1,12 @@
 package cz.gattserver.android;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -73,6 +77,12 @@ public class BeerActivity extends GrassActivity implements URLTask.URLTaskClient
 
             TextView descriptionText = findViewById(R.id.beerDescription);
             descriptionText.setText(jsonObject.getString("description").replaceAll("<br/>", "\n").replaceAll("<br>", "\n"));
+
+            byte[] decodedString = Base64.decode(jsonObject.getString("image"), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            ImageView beerImage = findViewById(R.id.beerImage);
+            beerImage.setImageBitmap(decodedByte);
+
         } catch (JSONException e) {
             Log.e(msg, "JSONObject", e);
         }
