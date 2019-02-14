@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.RateItemArrayAdapter;
 import cz.gattserver.android.interfaces.RatedItemTO;
 import cz.gattserver.android.lazyloader.LazyListActivity;
@@ -18,11 +19,7 @@ public class BeersActivity extends LazyListActivity<RatedItemTO> {
 
     @Override
     protected RatedItemTO constructTO(JSONObject jsonObject) throws JSONException {
-        StringBuilder sb = new StringBuilder();
-        int rating = (int) Double.parseDouble(jsonObject.getString("rating"));
-        for (int i = 0; i < 5; i++)
-            sb.append(i < rating ? "★" : "☆");
-        return new RatedItemTO(sb.toString(), jsonObject.getString("brewery") + ": " + jsonObject.getString("name"), jsonObject.getString("id"));
+        return new RatedItemTO(FormatUtils.formatRatingStars(Double.parseDouble(jsonObject.getString("rating"))), jsonObject.getString("brewery") + ": " + jsonObject.getString("name"), jsonObject.getString("id"));
     }
 
     @Override

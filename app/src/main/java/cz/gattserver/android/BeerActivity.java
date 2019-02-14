@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTask;
 
@@ -48,32 +49,35 @@ public class BeerActivity extends GrassActivity implements URLTask.URLTaskClient
             TextView nameText = findViewById(R.id.beerName);
             nameText.setText(jsonObject.getString("name"));
 
+            TextView ratingText = findViewById(R.id.beerRating);
+            ratingText.setText(FormatUtils.formatRatingStars(Double.parseDouble(jsonObject.getString("rating"))));
+
             TextView countryText = findViewById(R.id.beerCountry);
-            countryText.setText(getString(R.string.beer_country, dashIfNullByJSON(jsonObject, "country")));
+            countryText.setText(dashIfNullByJSON(jsonObject, "country"));
 
             TextView breweryText = findViewById(R.id.beerBrewery);
-            breweryText.setText(getString(R.string.beer_brewery, dashIfNullByJSON(jsonObject, "brewery")));
+            breweryText.setText(dashIfNullByJSON(jsonObject, "brewery"));
 
             TextView degreesText = findViewById(R.id.beerDegrees);
-            degreesText.setText(getString(R.string.beer_degrees, dashIfNullByJSON(jsonObject, "degrees")));
+            degreesText.setText(getString(R.string.beer_degrees_format, dashIfNullByJSON(jsonObject, "degrees")));
 
             TextView alcoholText = findViewById(R.id.beerAlcohol);
-            alcoholText.setText(getString(R.string.drink_alcohol, dashIfNullByJSON(jsonObject, "alcohol")));
+            alcoholText.setText(getString(R.string.drink_alcohol_format, dashIfNullByJSON(jsonObject, "alcohol")));
 
             TextView ibuText = findViewById(R.id.beerIBU);
-            ibuText.setText(getString(R.string.beer_ibu, dashIfNullByJSON(jsonObject, "ibu")));
+            ibuText.setText(dashIfNullByJSON(jsonObject, "ibu"));
 
             TextView categoryText = findViewById(R.id.beerCategory);
-            categoryText.setText(getString(R.string.beer_category, dashIfNullByJSON(jsonObject, "category")));
+            categoryText.setText(dashIfNullByJSON(jsonObject, "category"));
 
             TextView hopsText = findViewById(R.id.beerHops);
-            hopsText.setText(getString(R.string.beer_hops, dashIfNullByJSON(jsonObject, "hops")));
+            hopsText.setText(dashIfNullByJSON(jsonObject, "hops"));
 
             TextView maltTypeText = findViewById(R.id.beerMaltType);
-            maltTypeText.setText(getString(R.string.beer_malt_type, dashIfNullByJSON(jsonObject, "maltType")));
+            maltTypeText.setText(dashIfNullByJSON(jsonObject, "maltType"));
 
             TextView maltsText = findViewById(R.id.beerMalts);
-            maltsText.setText(getString(R.string.beer_malts, dashIfNullByJSON(jsonObject, "malts")));
+            maltsText.setText(dashIfNullByJSON(jsonObject, "malts"));
 
             TextView descriptionText = findViewById(R.id.beerDescription);
             descriptionText.setText(jsonObject.getString("description").replaceAll("<br/>", "\n").replaceAll("<br>", "\n"));
