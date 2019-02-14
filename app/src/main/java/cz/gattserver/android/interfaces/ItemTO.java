@@ -1,8 +1,9 @@
 package cz.gattserver.android.interfaces;
 
 public class ItemTO {
-    private String name;
-    private String id;
+
+    protected String name;
+    protected String id;
 
     public ItemTO(String name, String id) {
         this.name = name;

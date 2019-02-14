@@ -47,7 +47,7 @@ public abstract class LazyListActivity<T> extends GrassActivity implements URLTa
 
         listView = new ListView(this);
         listView.addFooterView(progressBar = new ProgressBar(this));
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        adapter = createArrayAdapter();
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,6 +64,10 @@ public abstract class LazyListActivity<T> extends GrassActivity implements URLTa
         lazyLoaderTask.execute(countURL);
 
         Log.d("LazyListActivity", "The onCreate() event");
+    }
+
+    protected ArrayAdapter<T> createArrayAdapter() {
+        return new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
     }
 
     public void onSuccess(String result) {
