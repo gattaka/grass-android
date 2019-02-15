@@ -15,4 +15,6 @@
     <string name="beer_malts">Slady:</string>
     <string name="rum_years">Stáří:</string>
     <string name="rum_type">Typ:</string>
+    <string name="whiskey_years">Stáří:</string>
+    <string name="whiskey_type">Typ:</string>
 </resources>

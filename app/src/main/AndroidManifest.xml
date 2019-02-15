@@ -27,6 +27,8 @@
         <activity android:name="cz.gattserver.android.drinks.BeerActivity"></activity>
         <activity android:name="cz.gattserver.android.drinks.RumsActivity"></activity>
         <activity android:name="cz.gattserver.android.drinks.RumActivity"></activity>
+        <activity android:name="cz.gattserver.android.drinks.WhiskiesActivity"></activity>
+        <activity android:name="cz.gattserver.android.drinks.WhiskeyActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleriesActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleryActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotoActivity"></activity>
