@@ -11,9 +11,16 @@ import org.json.JSONObject;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTask;
 
-public class SongActivity extends GrassActivity implements URLTask.URLTaskClient {
+public class SongActivity extends GrassActivity {
 
     private String msg = "GrassAPP: ";
+
+    private static class SongActivityInitAction implements URLTask.OnSuccessAction<SongActivity> {
+        @Override
+        public void run(SongActivity urlTaskClient, String result) {
+            urlTaskClient.init(result);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +32,7 @@ public class SongActivity extends GrassActivity implements URLTask.URLTaskClient
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 
-        URLTask<SongActivity> fetchTask = new URLTask<>(this);
+        URLTask<SongActivity> fetchTask = new URLTask<>(this, new SongActivityInitAction());
 
         // http://www.gattserver.cz/ws/songs/song?id=4
         fetchTask.execute(Config.SONG_DETAIL_RESOURCE + "?id=" + id);
@@ -33,8 +40,7 @@ public class SongActivity extends GrassActivity implements URLTask.URLTaskClient
         Log.d(msg, "The onCreate() event");
     }
 
-    @Override
-    public void onSuccess(String result) {
+    public void init(String result) {
         try {
             JSONObject jsonObject = new JSONObject(result);
 

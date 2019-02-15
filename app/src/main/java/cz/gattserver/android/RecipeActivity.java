@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTask;
 
-public class RecipeActivity extends GrassActivity implements URLTask.URLTaskClient {
+public class RecipeActivity extends GrassActivity {
 
     private String msg = "GrassAPP: ";
 
@@ -25,7 +25,12 @@ public class RecipeActivity extends GrassActivity implements URLTask.URLTaskClie
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 
-        URLTask<RecipeActivity> fetchTask = new URLTask<>(this);
+        URLTask<RecipeActivity> fetchTask = new URLTask<>(this, new URLTask.OnSuccessAction<RecipeActivity>() {
+            @Override
+            public void run(RecipeActivity urlTaskClient, String result) {
+                urlTaskClient.init(result);
+            }
+        });
 
         // http://www.gattserver.cz/ws/recipes/recipe?id=4
         fetchTask.execute(Config.RECIPE_DETAIL_RESOURCE + "?id=" + id);
@@ -33,8 +38,7 @@ public class RecipeActivity extends GrassActivity implements URLTask.URLTaskClie
         Log.d(msg, "The onCreate() event");
     }
 
-    @Override
-    public void onSuccess(String result) {
+    public void init(String result) {
         try {
             JSONObject jsonObject = new JSONObject(result);
 

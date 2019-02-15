@@ -12,6 +12,7 @@ import java.util.List;
 
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.photogallery.PhotogalleriesActivity;
 
 public class MainActivity extends GrassActivity {
 
@@ -26,7 +27,8 @@ public class MainActivity extends GrassActivity {
         buttonDefinitions.add(new ButtonDefinition("Fotogalerie", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, PhotogalleriesActivity.class);
+                startActivity(intent);
             }
         }));
         buttonDefinitions.add(new ButtonDefinition("Recepty", new View.OnClickListener() {

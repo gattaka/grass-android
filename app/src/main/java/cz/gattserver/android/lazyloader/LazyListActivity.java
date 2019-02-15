@@ -14,9 +14,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.gattserver.android.common.GrassActivity;
-import cz.gattserver.android.common.URLTask;
 
-public abstract class LazyListActivity<T> extends GrassActivity implements URLTask.URLTaskClient {
+public abstract class LazyListActivity<T> extends GrassActivity {
 
     ListView listView;
     ProgressBar progressBar;
@@ -70,7 +69,4 @@ public abstract class LazyListActivity<T> extends GrassActivity implements URLTa
         return new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
     }
 
-    public void onSuccess(String result) {
-        // nepoužívá se
-    }
 }

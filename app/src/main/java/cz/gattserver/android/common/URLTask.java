@@ -10,16 +10,22 @@ import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class URLTask<T extends URLTask.URLTaskClient> extends AsyncTask<String, Void, String> {
+public class URLTask<T> extends AsyncTask<String, Void, String> {
 
     private WeakReference<T> urlTaskClientWeakReference;
+    private OnSuccessAction<T> onSuccessAction;
 
-    public URLTask(T urlTaskClient) {
+    public URLTask(T urlTaskClient, OnSuccessAction<T> onSuccessAction) {
         this.urlTaskClientWeakReference = new WeakReference<>(urlTaskClient);
+        this.onSuccessAction = onSuccessAction;
     }
 
-    public interface URLTaskClient {
-        void onSuccess(String result);
+    public URLTask(T urlTaskClient) {
+        this(urlTaskClient, null);
+    }
+
+    public interface OnSuccessAction<C> {
+        void run(C urlTaskClient, String result);
     }
 
     @Override
@@ -61,6 +67,7 @@ public class URLTask<T extends URLTask.URLTaskClient> extends AsyncTask<String, 
     }
 
     protected void runOnWeakReference(T instance, String result) {
-        instance.onSuccess(result);
+        if (onSuccessAction != null)
+            onSuccessAction.run(instance, result);
     }
 }

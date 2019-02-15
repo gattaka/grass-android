@@ -16,7 +16,7 @@ import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTask;
 
-public class BeerActivity extends GrassActivity implements URLTask.URLTaskClient {
+public class BeerActivity extends GrassActivity {
 
     private String msg = "GrassAPP: ";
 
@@ -30,7 +30,13 @@ public class BeerActivity extends GrassActivity implements URLTask.URLTaskClient
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 
-        URLTask<BeerActivity> fetchTask = new URLTask<>(this);
+        URLTask<BeerActivity> fetchTask = new URLTask<>(this, new URLTask.OnSuccessAction<BeerActivity>() {
+            @Override
+            public void run(BeerActivity urlTaskClient, String result) {
+                urlTaskClient.init(result);
+            }
+        });
+
         fetchTask.execute(Config.DRINKS_BEER_DETAIL_RESOURCE + "?id=" + id);
 
         Log.d(msg, "The onCreate() event");
@@ -41,8 +47,7 @@ public class BeerActivity extends GrassActivity implements URLTask.URLTaskClient
         return value == null || "null".equals(value) ? "-" : value;
     }
 
-    @Override
-    public void onSuccess(String result) {
+    public void init(String result) {
         try {
             JSONObject jsonObject = new JSONObject(result);
 
