@@ -1,37 +1,36 @@
 package cz.gattserver.android.common;
 
 import android.content.Context;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import cz.gattserver.android.R;
-import cz.gattserver.android.interfaces.RatedItemTO;
+import cz.gattserver.android.interfaces.ImageItemTO;
 
-public class RateItemArrayAdapter extends ArrayAdapter<RatedItemTO> {
+public class ImageItemArrayAdapter extends ArrayAdapter<ImageItemTO> {
 
     private int resource;
 
-    public RateItemArrayAdapter(@NonNull Context context, int resource) {
+    public ImageItemArrayAdapter(@NonNull Context context, int resource) {
         super(context, resource);
         this.resource = resource;
     }
 
     @Override
-    public @NonNull
-    View getView(int position, @Nullable View convertView,
-                 @NonNull ViewGroup parent) {
+    @NonNull
+    public View getView(int position, @Nullable View convertView,
+                        @NonNull ViewGroup parent) {
         return createViewFromResource(LayoutInflater.from(getContext()), position, convertView, parent, resource);
     }
 
-    private @NonNull
-    View createViewFromResource(@NonNull LayoutInflater inflater, int position, @Nullable View convertView, @NonNull ViewGroup parent, int resource) {
+    @NonNull
+    private View createViewFromResource(@NonNull LayoutInflater inflater, int position, @Nullable View convertView, @NonNull ViewGroup parent, int resource) {
 
         final View view;
 
@@ -41,13 +40,13 @@ public class RateItemArrayAdapter extends ArrayAdapter<RatedItemTO> {
             view = convertView;
         }
 
-        final RatedItemTO item = getItem(position);
+        final ImageItemTO item = getItem(position);
         if (item != null) {
-            TextView ratingTextView = view.findViewById(R.id.itemRating);
-            ratingTextView.setText(item.getRating());
-
             TextView nameTextView = view.findViewById(R.id.itemName);
             nameTextView.setText(item.getName());
+
+            ImageView imageView = view.findViewById(R.id.itemImage);
+            imageView.setImageBitmap(item.getBitmap());
         }
 
         return view;

@@ -17,8 +17,8 @@ public class SongActivity extends GrassActivity {
 
     private static class SongActivityInitAction implements URLTask.OnSuccessAction<SongActivity> {
         @Override
-        public void run(SongActivity urlTaskClient, String result) {
-            urlTaskClient.init(result);
+        public void run(SongActivity urlTaskClient, URLTask.URLTaskInfoBundle bundle) {
+            urlTaskClient.init(bundle.getResultAsStringUTF());
         }
     }
 

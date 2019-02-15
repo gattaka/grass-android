@@ -27,8 +27,8 @@ public class RecipeActivity extends GrassActivity {
 
         URLTask<RecipeActivity> fetchTask = new URLTask<>(this, new URLTask.OnSuccessAction<RecipeActivity>() {
             @Override
-            public void run(RecipeActivity urlTaskClient, String result) {
-                urlTaskClient.init(result);
+            public void run(RecipeActivity urlTaskClient, URLTask.URLTaskInfoBundle bundle) {
+                urlTaskClient.init(bundle.getResultAsStringUTF());
             }
         });
 

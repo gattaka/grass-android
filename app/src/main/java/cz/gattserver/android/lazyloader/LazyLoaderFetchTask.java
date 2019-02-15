@@ -15,9 +15,9 @@ public class LazyLoaderFetchTask<T> extends URLTask<LazyListActivity<T>> {
     }
 
     @Override
-    protected void runOnWeakReference(LazyListActivity<T> instance, String result) {
+    protected void runOnWeakReference(LazyListActivity<T> instance, URLTaskInfoBundle result) {
         try {
-            JSONArray jsonArray = new JSONArray(result);
+            JSONArray jsonArray = new JSONArray(result.getResultAsStringUTF());
             for (int i = 0; i < jsonArray.length(); i++) {
                 final JSONObject jsonObject = jsonArray.getJSONObject(i);
                 instance.adapter.add(instance.constructTO(jsonObject));

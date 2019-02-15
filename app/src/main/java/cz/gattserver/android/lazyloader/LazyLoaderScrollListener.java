@@ -6,6 +6,14 @@ public abstract class LazyLoaderScrollListener implements AbsListView.OnScrollLi
 
     private boolean loading = true;
     private int previousTotal = 0;
+    private int threshold = 10;
+
+    public LazyLoaderScrollListener(int threshold) {
+        this.threshold = threshold;
+    }
+
+    public LazyLoaderScrollListener() {
+    }
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -23,7 +31,7 @@ public abstract class LazyLoaderScrollListener implements AbsListView.OnScrollLi
         }
 
         // check if the List needs more data
-        int threshold = 10;
+
         if (!loading && ((firstVisibleItem + visibleItemCount) >= (totalItemCount - threshold))) {
             loading = true;
 

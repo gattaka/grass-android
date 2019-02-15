@@ -12,18 +12,18 @@ public class LazyLoaderCountTask<T> extends URLTask<LazyListActivity<T>> {
     private int currentPage = 0;
     private int totalCount;
 
-    LazyLoaderCountTask(LazyListActivity<T> lazyListViewActivity) {
+    public LazyLoaderCountTask(LazyListActivity<T> lazyListViewActivity) {
         super(lazyListViewActivity);
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        totalCount = Integer.parseInt(result);
+    protected void onPostExecute(URLTaskInfoBundle result) {
+        totalCount = Integer.parseInt(result.getResultAsStringUTF());
         super.onPostExecute(result);
     }
 
     @Override
-    protected void runOnWeakReference(final LazyListActivity<T> instance, String result) {
+    protected void runOnWeakReference(final LazyListActivity<T> instance, URLTaskInfoBundle result) {
         instance.listView.setOnScrollListener(new LazyLoaderScrollListener() {
             @Override
             public void loadMore(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {

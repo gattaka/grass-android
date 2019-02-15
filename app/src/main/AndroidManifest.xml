@@ -27,6 +27,7 @@
         <activity android:name="cz.gattserver.android.BeerActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleriesActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleryActivity"></activity>
+        <activity android:name="cz.gattserver.android.photogallery.PhotoActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

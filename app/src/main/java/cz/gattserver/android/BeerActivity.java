@@ -32,8 +32,8 @@ public class BeerActivity extends GrassActivity {
 
         URLTask<BeerActivity> fetchTask = new URLTask<>(this, new URLTask.OnSuccessAction<BeerActivity>() {
             @Override
-            public void run(BeerActivity urlTaskClient, String result) {
-                urlTaskClient.init(result);
+            public void run(BeerActivity urlTaskClient, URLTask.URLTaskInfoBundle bundle) {
+                urlTaskClient.init(bundle.getResultAsStringUTF());
             }
         });
 

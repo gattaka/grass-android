@@ -7,16 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
-import cz.gattserver.android.interfaces.ItemTO;
-import cz.gattserver.android.lazyloader.LazyListActivity;
 
 public class DrinksActivity extends GrassActivity {
 

@@ -27,8 +27,8 @@ public class CampgameActivity extends GrassActivity {
 
         URLTask<CampgameActivity> fetchTask = new URLTask<>(this, new URLTask.OnSuccessAction<CampgameActivity>() {
             @Override
-            public void run(CampgameActivity urlTaskClient, String result) {
-                urlTaskClient.init(result);
+            public void run(CampgameActivity urlTaskClient, URLTask.URLTaskInfoBundle bundle) {
+                urlTaskClient.init(bundle.getResultAsStringUTF());
             }
         });
 
