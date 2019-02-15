@@ -1,4 +1,4 @@
-package cz.gattserver.android;
+package cz.gattserver.android.drinks;
 
 import android.content.Intent;
 import android.widget.ArrayAdapter;
@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.gattserver.android.Config;
+import cz.gattserver.android.R;
 import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.RateItemArrayAdapter;
 import cz.gattserver.android.interfaces.RatedItemTO;
@@ -14,7 +16,7 @@ import cz.gattserver.android.lazyloader.LazyListActivity;
 public class BeersActivity extends LazyListActivity<RatedItemTO> {
 
     public BeersActivity() {
-        super(R.layout.activity_beers, "Piva", Config.DRINKS_BEER_COUNT_RESOURCE);
+        super(R.layout.activity_beers, "Pivo", Config.DRINKS_BEER_COUNT_RESOURCE);
     }
 
     @Override

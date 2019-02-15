@@ -2,7 +2,7 @@
     <string name="app_name">GrassAndroid</string>
     <string name="song_name">%1$s (%2$s)</string>
     <string name="drink_rating">Hodnocení:</string>
-    <string name="beer_country">Původ:</string>
+    <string name="drink_country">Původ:</string>
     <string name="beer_brewery">Pivovar:</string>
     <string name="beer_degrees">Stupně:</string>
     <string name="beer_degrees_format">%1$s°</string>
@@ -13,4 +13,6 @@
     <string name="beer_hops">Chmel:</string>
     <string name="beer_malt_type">Typ sladu:</string>
     <string name="beer_malts">Slady:</string>
+    <string name="rum_years">Stáří:</string>
+    <string name="rum_type">Typ:</string>
 </resources>

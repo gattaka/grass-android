@@ -10,6 +10,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ZoomControls;
 
 import java.net.URLEncoder;
@@ -17,6 +18,7 @@ import java.net.URLEncoder;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.OnSwipeTouchListener;
 import cz.gattserver.android.common.URLTask;
 
 public class PhotoActivity extends GrassActivity {
@@ -55,6 +57,26 @@ public class PhotoActivity extends GrassActivity {
         String id = intent.getStringExtra("id");
         String name = intent.getStringExtra("name");
 
+        imageView = findViewById(R.id.imageView);
+        mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
+        imageView.setOnTouchListener(new OnSwipeTouchListener(this) {
+            public void onSwipeTop() {
+                Toast.makeText(PhotoActivity.this, "top", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeRight() {
+                Toast.makeText(PhotoActivity.this, "right", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeLeft() {
+                Toast.makeText(PhotoActivity.this, "left", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeBottom() {
+                Toast.makeText(PhotoActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         URLTask<PhotoActivity> fetchTask = new URLTask<>(this, new PhotoActivityInitAction());
 
         // http://localhost:8180/web/ws/pg/photo?id=364&fileName=shocked_kittens_cr.jpg
@@ -70,9 +92,6 @@ public class PhotoActivity extends GrassActivity {
 
     public void init(byte[] bytes) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-        imageView = findViewById(R.id.imageView);
         imageView.setImageBitmap(bitmap);
-        mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
     }
 }

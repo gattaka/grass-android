@@ -1,4 +1,4 @@
-package cz.gattserver.android;
+package cz.gattserver.android.drinks;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.gattserver.android.Config;
+import cz.gattserver.android.R;
 import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTask;
@@ -51,13 +53,13 @@ public class BeerActivity extends GrassActivity {
         try {
             JSONObject jsonObject = new JSONObject(result);
 
-            TextView nameText = findViewById(R.id.beerName);
+            TextView nameText = findViewById(R.id.drinkName);
             nameText.setText(jsonObject.getString("name"));
 
-            TextView ratingText = findViewById(R.id.beerRating);
+            TextView ratingText = findViewById(R.id.drinkRating);
             ratingText.setText(FormatUtils.formatRatingStars(Double.parseDouble(jsonObject.getString("rating"))));
 
-            TextView countryText = findViewById(R.id.beerCountry);
+            TextView countryText = findViewById(R.id.drinkCountry);
             countryText.setText(dashIfNullByJSON(jsonObject, "country"));
 
             TextView breweryText = findViewById(R.id.beerBrewery);
@@ -66,7 +68,7 @@ public class BeerActivity extends GrassActivity {
             TextView degreesText = findViewById(R.id.beerDegrees);
             degreesText.setText(getString(R.string.beer_degrees_format, dashIfNullByJSON(jsonObject, "degrees")));
 
-            TextView alcoholText = findViewById(R.id.beerAlcohol);
+            TextView alcoholText = findViewById(R.id.drinkAlcohol);
             alcoholText.setText(getString(R.string.drink_alcohol_format, dashIfNullByJSON(jsonObject, "alcohol")));
 
             TextView ibuText = findViewById(R.id.beerIBU);
@@ -84,13 +86,13 @@ public class BeerActivity extends GrassActivity {
             TextView maltsText = findViewById(R.id.beerMalts);
             maltsText.setText(dashIfNullByJSON(jsonObject, "malts"));
 
-            TextView descriptionText = findViewById(R.id.beerDescription);
+            TextView descriptionText = findViewById(R.id.drinkDescription);
             descriptionText.setText(jsonObject.getString("description").replaceAll("<br/>", "\n").replaceAll("<br>", "\n"));
 
             byte[] decodedString = Base64.decode(jsonObject.getString("image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            ImageView beerImage = findViewById(R.id.beerImage);
-            beerImage.setImageBitmap(decodedByte);
+            ImageView drinkImage = findViewById(R.id.drinkImage);
+            drinkImage.setImageBitmap(decodedByte);
 
         } catch (JSONException e) {
             Log.e(msg, "JSONObject", e);

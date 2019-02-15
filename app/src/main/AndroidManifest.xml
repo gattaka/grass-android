@@ -22,9 +22,11 @@
         <activity android:name="cz.gattserver.android.SongActivity"></activity>
         <activity android:name="cz.gattserver.android.CampgamesActivity"></activity>
         <activity android:name="cz.gattserver.android.CampgameActivity"></activity>
-        <activity android:name="cz.gattserver.android.DrinksActivity"></activity>
-        <activity android:name="cz.gattserver.android.BeersActivity"></activity>
-        <activity android:name="cz.gattserver.android.BeerActivity"></activity>
+        <activity android:name="cz.gattserver.android.drinks.DrinksActivity"></activity>
+        <activity android:name="cz.gattserver.android.drinks.BeersActivity"></activity>
+        <activity android:name="cz.gattserver.android.drinks.BeerActivity"></activity>
+        <activity android:name="cz.gattserver.android.drinks.RumsActivity"></activity>
+        <activity android:name="cz.gattserver.android.drinks.RumActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleriesActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleryActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotoActivity"></activity>

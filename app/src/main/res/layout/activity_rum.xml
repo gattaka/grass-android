@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:parentActivityName=".BeersActivity"
-    tools:context=".drinks.BeerActivity">
+    android:parentActivityName=".RumsActivity"
+    tools:context=".drinks.RumActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -83,11 +83,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:text="@string/beer_brewery"
+                        android:text="@string/rum_years"
                         android:textColor="#000" />
 
                     <TextView
-                        android:id="@+id/beerBrewery"
+                        android:id="@+id/rumYears"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TextView" />
@@ -102,11 +102,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:text="@string/beer_degrees"
+                        android:text="@string/rum_type"
                         android:textColor="#000" />
 
                     <TextView
-                        android:id="@+id/beerDegrees"
+                        android:id="@+id/rumType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TextView" />
@@ -128,103 +128,6 @@
                         android:id="@+id/drinkAlcohol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="@string/beer_ibu"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:id="@+id/beerIBU"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="@string/beer_category"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:id="@+id/beerCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="@string/beer_hops"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:id="@+id/beerHops"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="TextView" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="@string/beer_malt_type"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:id="@+id/beerMaltType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="@string/beer_malts"
-                        android:textColor="#000" />
-
-                    <TextView
-                        android:id="@+id/beerMalts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="TextView" />
 
                 </TableRow>

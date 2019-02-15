@@ -20,14 +20,12 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 
-import cz.gattserver.android.BeerActivity;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.ImageItemArrayAdapter;
 import cz.gattserver.android.common.URLTask;
 import cz.gattserver.android.interfaces.ImageItemTO;
-import cz.gattserver.android.lazyloader.LazyListActivity;
 import cz.gattserver.android.lazyloader.LazyLoaderScrollListener;
 
 public class PhotogalleryActivity extends GrassActivity {

@@ -12,6 +12,7 @@ import java.util.List;
 
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.drinks.DrinksActivity;
 import cz.gattserver.android.photogallery.PhotogalleriesActivity;
 
 public class MainActivity extends GrassActivity {
