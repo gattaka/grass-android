@@ -5,10 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.ZoomControls;
+
+import java.net.URLEncoder;
 
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
@@ -17,13 +21,26 @@ import cz.gattserver.android.common.URLTask;
 
 public class PhotoActivity extends GrassActivity {
 
-    private float currentZoom;
-    private ScaleAnimation scaleAnim;
+    private ScaleGestureDetector mScaleGestureDetector;
+    private float mScaleFactor = 1.0f;
+    private ImageView imageView;
 
     private static class PhotoActivityInitAction implements URLTask.OnSuccessAction<PhotoActivity> {
         @Override
         public void run(PhotoActivity urlTaskClient, URLTask.URLTaskInfoBundle bundle) {
             urlTaskClient.init(bundle.getResult());
+        }
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
+            mScaleFactor *= scaleGestureDetector.getScaleFactor();
+            mScaleFactor = Math.max(0.1f,
+                    Math.min(mScaleFactor, 10.0f));
+            imageView.setScaleX(mScaleFactor);
+            imageView.setScaleY(mScaleFactor);
+            return true;
         }
     }
 
@@ -41,43 +58,21 @@ public class PhotoActivity extends GrassActivity {
         URLTask<PhotoActivity> fetchTask = new URLTask<>(this, new PhotoActivityInitAction());
 
         // http://localhost:8180/web/ws/pg/photo?id=364&fileName=shocked_kittens_cr.jpg
-        fetchTask.execute(Config.PHOTO_DETAIL_RESOURCE + "?id=" + id + "&fileName=" + name);
+        fetchTask.execute(Config.PHOTO_DETAIL_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(name));
 
         Log.d("PhotoActivity", "The onCreate() event");
+    }
+
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        mScaleGestureDetector.onTouchEvent(motionEvent);
+        return true;
     }
 
     public void init(byte[] bytes) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-        final ImageView imageView = findViewById(R.id.itemImage);
-        final ZoomControls zc = (ZoomControls) findViewById(R.id.zoomControl);
+        imageView = findViewById(R.id.imageView);
         imageView.setImageBitmap(bitmap);
-
-        zc.setOnZoomInClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                float oldZoom = currentZoom;
-                currentZoom = currentZoom * 1.25f;
-                zc.setIsZoomOutEnabled(true);
-                if (3.0 < currentZoom) {
-                    zc.setIsZoomInEnabled(false);
-                }
-                scaleAnim = new ScaleAnimation(oldZoom, currentZoom, oldZoom, currentZoom, 0, 0);
-                scaleAnim.setFillAfter(true);
-                imageView.startAnimation(scaleAnim);
-            }
-        });
-        zc.setOnZoomOutClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                float oldZoom = currentZoom;
-                currentZoom = currentZoom / 1.25f;
-                zc.setIsZoomInEnabled(true);
-                if (0.33 > currentZoom) {
-                    zc.setIsZoomOutEnabled(false);
-                }
-                scaleAnim = new ScaleAnimation(oldZoom, currentZoom, oldZoom, currentZoom, 0, 0);
-                scaleAnim.setFillAfter(true);
-                imageView.startAnimation(scaleAnim);
-            }
-        });
+        mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
     }
 }

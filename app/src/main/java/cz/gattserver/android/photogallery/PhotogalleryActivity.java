@@ -18,6 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
+
 import cz.gattserver.android.BeerActivity;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
@@ -107,7 +109,7 @@ public class PhotogalleryActivity extends GrassActivity {
                     if (totalCount > currentMini) {
                         URLTask<PhotogalleryActivity> fetchTask = new URLTask<>(PhotogalleryActivity.this, new PhotogalleryFetchMiniatureAction());
                         // http://gattserver.cz/ws/pg/mini?id=383&fileName=31252889_10211544311583314_2288872652829360128_n.jpg
-                        fetchTask.execute(Config.PHOTO_MINIATURE_RESOURCE + "?id=" + id + "&fileName=" + photoNames[currentMini], photoNames[currentMini], id);
+                        fetchTask.execute(Config.PHOTO_MINIATURE_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(photoNames[currentMini]), photoNames[currentMini], id);
                         currentMini++;
                     } else {
                         listView.removeFooterView(progressBar);
