@@ -1,13 +1,16 @@
-package cz.gattserver.android;
+package cz.gattserver.android.songs;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.gattserver.android.Config;
+import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTask;
 
@@ -38,6 +41,18 @@ public class SongActivity extends GrassActivity {
         fetchTask.execute(Config.SONG_DETAIL_RESOURCE + "?id=" + id);
 
         Log.d(msg, "The onCreate() event");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     public void init(String result) {

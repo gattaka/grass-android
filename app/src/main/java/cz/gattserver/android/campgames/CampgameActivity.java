@@ -1,4 +1,4 @@
-package cz.gattserver.android;
+package cz.gattserver.android.campgames;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.gattserver.android.Config;
+import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTask;
 

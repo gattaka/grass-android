@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:parentActivityName=".CampgamesActivity"
-    tools:context=".CampgameActivity">
+    tools:context=".campgames.CampgameActivity">
 
     <ScrollView
         android:layout_width="match_parent"

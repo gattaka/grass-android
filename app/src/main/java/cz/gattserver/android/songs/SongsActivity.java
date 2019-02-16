@@ -1,17 +1,19 @@
-package cz.gattserver.android;
+package cz.gattserver.android.songs;
 
 import android.content.Intent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.gattserver.android.Config;
+import cz.gattserver.android.R;
 import cz.gattserver.android.interfaces.ItemTO;
 import cz.gattserver.android.lazyloader.LazyListActivity;
 
-public class RecipesActivity extends LazyListActivity<ItemTO> {
+public class SongsActivity extends LazyListActivity<ItemTO> {
 
-    public RecipesActivity() {
-        super(R.layout.activity_recipes, "Recepty", Config.RECIPES_COUNT_RESOURCE);
+    public SongsActivity() {
+        super(R.layout.activity_songs, "Zpěvník", Config.SONGS_COUNT_RESOURCE);
     }
 
     @Override
@@ -21,13 +23,13 @@ public class RecipesActivity extends LazyListActivity<ItemTO> {
 
     @Override
     protected void onItemClick(ItemTO item) {
-        Intent intent = new Intent(this, RecipeActivity.class);
+        Intent intent = new Intent(this, SongActivity.class);
         intent.putExtra("id", item.getId());
         startActivity(intent);
     }
 
     @Override
     protected String createFetchURL(int pageSize, int page) {
-        return Config.RECIPES_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page;
+        return Config.SONGS_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page;
     }
 }

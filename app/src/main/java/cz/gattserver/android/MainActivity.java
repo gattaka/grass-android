@@ -10,10 +10,14 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.gattserver.android.campgames.CampgamesActivity;
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.drinks.DrinksActivity;
+import cz.gattserver.android.messages.MessagesActivity;
 import cz.gattserver.android.photogallery.PhotogalleriesActivity;
+import cz.gattserver.android.recipes.RecipesActivity;
+import cz.gattserver.android.songs.SongsActivity;
 
 public class MainActivity extends GrassActivity {
 
@@ -60,10 +64,11 @@ public class MainActivity extends GrassActivity {
                 startActivity(intent);
             }
         }));
-        buttonDefinitions.add(new ButtonDefinition("SMS", new View.OnClickListener() {
+        buttonDefinitions.add(new ButtonDefinition("Zprávy", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, MessagesActivity.class);
+                startActivity(intent);
             }
         }));
 
