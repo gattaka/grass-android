@@ -6,9 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cz.gattserver.android.common.URLTask;
+import cz.gattserver.android.common.URLGetTask;
+import cz.gattserver.android.common.URLTaskInfoBundle;
 
-public class LazyLoaderFetchTask<T> extends URLTask<LazyListActivity<T>> {
+public class LazyLoaderFetchTask<T> extends URLGetTask<LazyListActivity<T>> {
 
     LazyLoaderFetchTask(LazyListActivity<T> lazyListViewActivity) {
         super(lazyListViewActivity);

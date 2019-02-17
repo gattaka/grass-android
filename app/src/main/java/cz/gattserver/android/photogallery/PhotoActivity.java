@@ -7,11 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.View;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.ZoomControls;
 
 import java.net.URLEncoder;
 
@@ -19,7 +16,8 @@ import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.OnSwipeTouchListener;
-import cz.gattserver.android.common.URLTask;
+import cz.gattserver.android.common.URLGetTask;
+import cz.gattserver.android.common.URLTaskInfoBundle;
 
 public class PhotoActivity extends GrassActivity {
 
@@ -27,9 +25,9 @@ public class PhotoActivity extends GrassActivity {
     private float mScaleFactor = 1.0f;
     private ImageView imageView;
 
-    private static class PhotoActivityInitAction implements URLTask.OnSuccessAction<PhotoActivity> {
+    private static class PhotoActivityInitAction implements URLGetTask.OnSuccessAction<PhotoActivity> {
         @Override
-        public void run(PhotoActivity urlTaskClient, URLTask.URLTaskInfoBundle bundle) {
+        public void run(PhotoActivity urlTaskClient, URLTaskInfoBundle bundle) {
             urlTaskClient.init(bundle.getResult());
         }
     }
@@ -77,7 +75,7 @@ public class PhotoActivity extends GrassActivity {
             }
         });
 
-        URLTask<PhotoActivity> fetchTask = new URLTask<>(this, new PhotoActivityInitAction());
+        URLGetTask<PhotoActivity> fetchTask = new URLGetTask<>(this, new PhotoActivityInitAction());
 
         // http://localhost:8180/web/ws/pg/photo?id=364&fileName=shocked_kittens_cr.jpg
         fetchTask.execute(Config.PHOTO_DETAIL_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(name));

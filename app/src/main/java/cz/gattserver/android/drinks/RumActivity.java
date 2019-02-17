@@ -16,7 +16,8 @@ import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.GrassActivity;
-import cz.gattserver.android.common.URLTask;
+import cz.gattserver.android.common.URLGetTask;
+import cz.gattserver.android.common.URLTaskInfoBundle;
 
 public class RumActivity extends GrassActivity {
 
@@ -32,9 +33,9 @@ public class RumActivity extends GrassActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 
-        URLTask<RumActivity> fetchTask = new URLTask<>(this, new URLTask.OnSuccessAction<RumActivity>() {
+        URLGetTask<RumActivity> fetchTask = new URLGetTask<>(this, new URLGetTask.OnSuccessAction<RumActivity>() {
             @Override
-            public void run(RumActivity urlTaskClient, URLTask.URLTaskInfoBundle bundle) {
+            public void run(RumActivity urlTaskClient, URLTaskInfoBundle bundle) {
                 urlTaskClient.init(bundle.getResultAsStringUTF());
             }
         });

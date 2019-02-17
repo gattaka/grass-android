@@ -24,7 +24,8 @@ import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.ImageItemArrayAdapter;
-import cz.gattserver.android.common.URLTask;
+import cz.gattserver.android.common.URLGetTask;
+import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.interfaces.ImageItemTO;
 import cz.gattserver.android.lazyloader.LazyLoaderScrollListener;
 
@@ -40,18 +41,18 @@ public class PhotogalleryActivity extends GrassActivity {
     private ProgressBar progressBar;
     private ArrayAdapter<ImageItemTO> adapter;
 
-    private static class PhotogalleryInitAction implements URLTask.OnSuccessAction<PhotogalleryActivity> {
+    private static class PhotogalleryInitAction implements URLGetTask.OnSuccessAction<PhotogalleryActivity> {
 
         @Override
-        public void run(PhotogalleryActivity instance, URLTask.URLTaskInfoBundle bundle) {
+        public void run(PhotogalleryActivity instance, URLTaskInfoBundle bundle) {
             instance.init(bundle.getResultAsStringUTF());
         }
     }
 
-    private static class PhotogalleryFetchMiniatureAction implements URLTask.OnSuccessAction<PhotogalleryActivity> {
+    private static class PhotogalleryFetchMiniatureAction implements URLGetTask.OnSuccessAction<PhotogalleryActivity> {
 
         @Override
-        public void run(PhotogalleryActivity instance, URLTask.URLTaskInfoBundle bundle) {
+        public void run(PhotogalleryActivity instance, URLTaskInfoBundle bundle) {
             instance.addMiniature(bundle);
         }
     }
@@ -66,7 +67,7 @@ public class PhotogalleryActivity extends GrassActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
 
-        URLTask<PhotogalleryActivity> fetchTask = new URLTask<>(this, new PhotogalleryInitAction());
+        URLGetTask<PhotogalleryActivity> fetchTask = new URLGetTask<>(this, new PhotogalleryInitAction());
 
         // http://gattserver.cz/ws/pg/gallery?id=383
         fetchTask.execute(Config.PG_DETAIL_RESOURCE + "?id=" + id);
@@ -74,7 +75,7 @@ public class PhotogalleryActivity extends GrassActivity {
         Log.d(msg, "The onCreate() event");
     }
 
-    public void addMiniature(URLTask.URLTaskInfoBundle bundle) {
+    public void addMiniature(URLTaskInfoBundle bundle) {
         if (bundle == null)
             return;
         byte[] image = bundle.getResult();
@@ -105,7 +106,7 @@ public class PhotogalleryActivity extends GrassActivity {
                 public void loadMore(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                     Log.d("LazyLoaderCountTask", "load() event");
                     if (totalCount > currentMini) {
-                        URLTask<PhotogalleryActivity> fetchTask = new URLTask<>(PhotogalleryActivity.this, new PhotogalleryFetchMiniatureAction());
+                        URLGetTask<PhotogalleryActivity> fetchTask = new URLGetTask<>(PhotogalleryActivity.this, new PhotogalleryFetchMiniatureAction());
                         // http://gattserver.cz/ws/pg/mini?id=383&fileName=31252889_10211544311583314_2288872652829360128_n.jpg
                         fetchTask.execute(Config.PHOTO_MINIATURE_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(photoNames[currentMini]), photoNames[currentMini], id);
                         currentMini++;

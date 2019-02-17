@@ -12,15 +12,16 @@ import org.json.JSONObject;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
-import cz.gattserver.android.common.URLTask;
+import cz.gattserver.android.common.URLGetTask;
+import cz.gattserver.android.common.URLTaskInfoBundle;
 
 public class SongActivity extends GrassActivity {
 
     private String msg = "GrassAPP: ";
 
-    private static class SongActivityInitAction implements URLTask.OnSuccessAction<SongActivity> {
+    private static class SongActivityInitAction implements URLGetTask.OnSuccessAction<SongActivity> {
         @Override
-        public void run(SongActivity urlTaskClient, URLTask.URLTaskInfoBundle bundle) {
+        public void run(SongActivity urlTaskClient, URLTaskInfoBundle bundle) {
             urlTaskClient.init(bundle.getResultAsStringUTF());
         }
     }
@@ -35,7 +36,7 @@ public class SongActivity extends GrassActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 
-        URLTask<SongActivity> fetchTask = new URLTask<>(this, new SongActivityInitAction());
+        URLGetTask<SongActivity> fetchTask = new URLGetTask<>(this, new SongActivityInitAction());
 
         // http://www.gattserver.cz/ws/songs/song?id=4
         fetchTask.execute(Config.SONG_DETAIL_RESOURCE + "?id=" + id);

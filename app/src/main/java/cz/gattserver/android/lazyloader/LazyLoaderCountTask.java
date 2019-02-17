@@ -3,9 +3,10 @@ package cz.gattserver.android.lazyloader;
 import android.util.Log;
 import android.widget.AbsListView;
 
-import cz.gattserver.android.common.URLTask;
+import cz.gattserver.android.common.URLGetTask;
+import cz.gattserver.android.common.URLTaskInfoBundle;
 
-public class LazyLoaderCountTask<T> extends URLTask<LazyListActivity<T>> {
+public class LazyLoaderCountTask<T> extends URLGetTask<LazyListActivity<T>> {
 
     private static int PAGE_SIZE = 10;
 
