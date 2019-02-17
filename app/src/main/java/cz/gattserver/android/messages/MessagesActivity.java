@@ -118,7 +118,7 @@ public class MessagesActivity extends GrassActivity {
                                         sb.append(sdf.format(new Date(Long.valueOf(m.getDate()))));
                                         sb.append("\n");
                                         sb.append(m.getBody());
-                                        sb.append("------\n\n");
+                                        sb.append("\n\n");
                                     }
                                     uploadTask.execute(Config.ARTICLES_CREATE, "text=" + sb.toString());
                                     constructTable();
