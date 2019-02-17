@@ -86,7 +86,7 @@ public class PhotogalleryActivity extends GrassActivity {
     }
 
     public void addMiniature(URLTaskInfoBundle bundle) {
-        if (bundle == null)
+        if (bundle == null || !bundle.isSuccess())
             return;
         byte[] image = bundle.getResult();
         Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
