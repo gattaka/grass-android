@@ -16,7 +16,7 @@ import cz.gattserver.android.lazyloader.LazyListActivity;
 public class BeersActivity extends LazyListActivity<RatedItemTO> {
 
     public BeersActivity() {
-        super(R.layout.activity_beers, "Pivo", Config.DRINKS_BEER_COUNT_RESOURCE);
+        super(R.layout.activity_beers, "Pivo");
     }
 
     @Override
@@ -34,6 +34,11 @@ public class BeersActivity extends LazyListActivity<RatedItemTO> {
         Intent intent = new Intent(this, BeerActivity.class);
         intent.putExtra("id", item.getId());
         startActivity(intent);
+    }
+
+    @Override
+    protected String createCountURL() {
+        return Config.DRINKS_BEER_COUNT_RESOURCE;
     }
 
     @Override

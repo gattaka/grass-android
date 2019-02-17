@@ -24,7 +24,6 @@ public abstract class LazyListActivity<T> extends GrassActivity {
     private @LayoutRes
     int layoutResID;
     private String title;
-    private String countURL;
 
     protected abstract T constructTO(JSONObject jsonObject) throws JSONException;
 
@@ -32,10 +31,11 @@ public abstract class LazyListActivity<T> extends GrassActivity {
 
     protected abstract String createFetchURL(int pageSize, int page);
 
-    public LazyListActivity(@LayoutRes int layoutResID, String title, String countURL) {
+    protected abstract String createCountURL();
+
+    public LazyListActivity(@LayoutRes int layoutResID, String title) {
         this.layoutResID = layoutResID;
         this.title = title;
-        this.countURL = countURL;
     }
 
     @Override
@@ -44,6 +44,31 @@ public abstract class LazyListActivity<T> extends GrassActivity {
         setContentView(layoutResID);
         setTitle(title);
 
+        createComponents();
+        initLazyLoaderTask();
+
+        Log.d("LazyListActivity", "The onCreate() event");
+    }
+
+    protected ArrayAdapter<T> getAdapter() {
+        return adapter;
+    }
+
+    protected ListView getListView() {
+        return listView;
+    }
+
+    protected void initLazyLoaderTask() {
+        LazyLoaderCountTask<T> lazyLoaderTask = new LazyLoaderCountTask<>(this);
+        lazyLoaderTask.execute(createCountURL());
+    }
+
+    protected void createComponents() {
+        listView = createListView();
+        setContentView(listView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    }
+
+    protected ListView createListView() {
         listView = new ListView(this);
         listView.addFooterView(progressBar = new ProgressBar(this));
         adapter = createArrayAdapter();
@@ -58,13 +83,7 @@ public abstract class LazyListActivity<T> extends GrassActivity {
                 LazyListActivity.this.onItemClick(item);
             }
         });
-
-        setContentView(listView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
-        LazyLoaderCountTask<T> lazyLoaderTask = new LazyLoaderCountTask<>(this);
-        lazyLoaderTask.execute(countURL);
-
-        Log.d("LazyListActivity", "The onCreate() event");
+        return listView;
     }
 
     protected ArrayAdapter<T> createArrayAdapter() {

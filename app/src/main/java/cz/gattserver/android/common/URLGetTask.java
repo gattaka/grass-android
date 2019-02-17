@@ -12,8 +12,8 @@ import java.net.URL;
 
 public class URLGetTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
 
-    private WeakReference<T> urlTaskClientWeakReference;
-    private OnSuccessAction<T> onSuccessAction;
+    protected WeakReference<T> urlTaskClientWeakReference;
+    protected OnSuccessAction<T> onSuccessAction;
 
     public interface OnSuccessAction<T> {
         void run(T urlTaskClient, URLTaskInfoBundle result);
@@ -48,13 +48,18 @@ public class URLGetTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
 
     @Override
     protected URLTaskInfoBundle doInBackground(String... params) {
+        String address = params[0];
         try {
+            Log.d("URLGetTask", "Trying... URL GET: " + address);
             URL url = new URL(params[0]);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            byte[] bytes = readBytes(connection.getInputStream());
-            return URLTaskInfoBundle.onSuccess(params, bytes, connection.getResponseCode());
+            InputStream is = connection.getInputStream();
+            byte[] bytes = readBytes(is);
+            URLTaskInfoBundle bundle = URLTaskInfoBundle.onSuccess(params, bytes, connection.getResponseCode());
+            Log.d("URLGetTask", "Success! URL GET: " + address);
+            return bundle;
         } catch (Exception ex) {
-            Log.e("JSONTask", "JSON fetch", ex);
+            Log.e("URLGetTask", "Failure. URL GET: " + address, ex);
             return URLTaskInfoBundle.onFail(params, ex);
         }
     }

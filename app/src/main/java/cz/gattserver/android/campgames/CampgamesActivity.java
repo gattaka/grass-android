@@ -13,7 +13,7 @@ import cz.gattserver.android.lazyloader.LazyListActivity;
 public class CampgamesActivity extends LazyListActivity<ItemTO> {
 
     public CampgamesActivity() {
-        super(R.layout.activity_campgames, "Táborové hry", Config.CAMPGAMES_COUNT_RESOURCE);
+        super(R.layout.activity_campgames, "Táborové hry");
     }
 
     @Override
@@ -26,6 +26,11 @@ public class CampgamesActivity extends LazyListActivity<ItemTO> {
         Intent intent = new Intent(this, CampgameActivity.class);
         intent.putExtra("id", item.getId());
         startActivity(intent);
+    }
+
+    @Override
+    protected String createCountURL() {
+        return Config.CAMPGAMES_COUNT_RESOURCE;
     }
 
     @Override

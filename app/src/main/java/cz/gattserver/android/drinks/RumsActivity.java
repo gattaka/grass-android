@@ -16,7 +16,7 @@ import cz.gattserver.android.lazyloader.LazyListActivity;
 public class RumsActivity extends LazyListActivity<RatedItemTO> {
 
     public RumsActivity() {
-        super(R.layout.activity_rums, "Rum", Config.DRINKS_RUM_COUNT_RESOURCE);
+        super(R.layout.activity_rums, "Rum");
     }
 
     @Override
@@ -34,6 +34,11 @@ public class RumsActivity extends LazyListActivity<RatedItemTO> {
         Intent intent = new Intent(this, RumActivity.class);
         intent.putExtra("id", item.getId());
         startActivity(intent);
+    }
+
+    @Override
+    protected String createCountURL() {
+        return Config.DRINKS_RUM_COUNT_RESOURCE;
     }
 
     @Override

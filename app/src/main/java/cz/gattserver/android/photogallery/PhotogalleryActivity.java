@@ -1,5 +1,7 @@
 package cz.gattserver.android.photogallery;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +29,7 @@ import cz.gattserver.android.common.ImageItemArrayAdapter;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.interfaces.ImageItemTO;
+import cz.gattserver.android.lazyloader.LazyListActivity;
 import cz.gattserver.android.lazyloader.LazyLoaderScrollListener;
 
 public class PhotogalleryActivity extends GrassActivity {
@@ -45,7 +48,14 @@ public class PhotogalleryActivity extends GrassActivity {
 
         @Override
         public void run(PhotogalleryActivity instance, URLTaskInfoBundle bundle) {
-            instance.init(bundle.getResultAsStringUTF());
+            if (bundle.isSuccess()) {
+                instance.init(bundle.getResultAsStringUTF());
+            } else {
+                new AlertDialog.Builder(instance)
+                        .setTitle("Chyba")
+                        .setMessage("Nezdařilo se načíst detail galerie")
+                        .setIcon(android.R.drawable.ic_dialog_alert).show();
+            }
         }
     }
 

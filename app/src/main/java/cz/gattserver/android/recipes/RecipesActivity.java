@@ -13,7 +13,7 @@ import cz.gattserver.android.lazyloader.LazyListActivity;
 public class RecipesActivity extends LazyListActivity<ItemTO> {
 
     public RecipesActivity() {
-        super(R.layout.activity_recipes, "Recepty", Config.RECIPES_COUNT_RESOURCE);
+        super(R.layout.activity_recipes, "Recepty");
     }
 
     @Override
@@ -26,6 +26,11 @@ public class RecipesActivity extends LazyListActivity<ItemTO> {
         Intent intent = new Intent(this, RecipeActivity.class);
         intent.putExtra("id", item.getId());
         startActivity(intent);
+    }
+
+    @Override
+    protected String createCountURL() {
+        return Config.RECIPES_COUNT_RESOURCE;
     }
 
     @Override

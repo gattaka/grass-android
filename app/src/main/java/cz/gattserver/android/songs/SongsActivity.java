@@ -13,7 +13,7 @@ import cz.gattserver.android.lazyloader.LazyListActivity;
 public class SongsActivity extends LazyListActivity<ItemTO> {
 
     public SongsActivity() {
-        super(R.layout.activity_songs, "Zpěvník", Config.SONGS_COUNT_RESOURCE);
+        super(R.layout.activity_songs, "Zpěvník");
     }
 
     @Override
@@ -26,6 +26,11 @@ public class SongsActivity extends LazyListActivity<ItemTO> {
         Intent intent = new Intent(this, SongActivity.class);
         intent.putExtra("id", item.getId());
         startActivity(intent);
+    }
+
+    @Override
+    protected String createCountURL() {
+        return Config.SONGS_COUNT_RESOURCE;
     }
 
     @Override
