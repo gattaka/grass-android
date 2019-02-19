@@ -80,6 +80,6 @@ public class MainActivity extends GrassActivity {
             mainLayout.addView(btn);
         }
 
-        Log.d("GrassAPP: ", "The onCreate() event");
+        Log.d("GrassAPP", "The onCreate() event");
     }
 }

@@ -54,6 +54,6 @@ public class DrinksActivity extends GrassActivity {
             mainLayout.addView(btn);
         }
 
-        Log.d("DrinksActivity: ", "The onCreate() event");
+        Log.d("DrinksActivity", "The onCreate() event");
     }
 }

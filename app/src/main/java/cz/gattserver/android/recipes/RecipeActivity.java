@@ -16,8 +16,6 @@ import cz.gattserver.android.common.URLTaskInfoBundle;
 
 public class RecipeActivity extends GrassActivity {
 
-    private String msg = "GrassAPP: ";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +36,7 @@ public class RecipeActivity extends GrassActivity {
         // http://www.gattserver.cz/ws/recipes/recipe?id=4
         fetchTask.execute(Config.RECIPE_DETAIL_RESOURCE + "?id=" + id);
 
-        Log.d(msg, "The onCreate() event");
+        Log.d("RecipeActivity", "The onCreate() event");
     }
 
     public void init(String result) {
@@ -51,7 +49,7 @@ public class RecipeActivity extends GrassActivity {
             TextView descriptionText = findViewById(R.id.recipeDescription);
             descriptionText.setText(jsonObject.getString("description").replaceAll("<br/>", "\n").replaceAll("<br>", "\n"));
         } catch (JSONException e) {
-            Log.e(msg, "JSONObject", e);
+            Log.e("RecipeActivity", "JSONObject", e);
         }
     }
 }

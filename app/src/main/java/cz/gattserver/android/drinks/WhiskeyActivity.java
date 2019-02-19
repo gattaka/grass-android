@@ -21,8 +21,6 @@ import cz.gattserver.android.common.URLTaskInfoBundle;
 
 public class WhiskeyActivity extends GrassActivity {
 
-    private String msg = "GrassAPP: ";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,7 @@ public class WhiskeyActivity extends GrassActivity {
 
         fetchTask.execute(Config.DRINKS_WHISKEY_DETAIL_RESOURCE + "?id=" + id);
 
-        Log.d(msg, "The onCreate() event");
+        Log.d("WhiskeyActivity", "The onCreate() event");
     }
 
     private String dashIfNullByJSON(JSONObject jsonObject, String key) throws JSONException {
@@ -81,7 +79,7 @@ public class WhiskeyActivity extends GrassActivity {
             drinkImage.setImageBitmap(decodedByte);
 
         } catch (JSONException e) {
-            Log.e(msg, "JSONObject", e);
+            Log.e("WhiskeyActivity", "JSONObject", e);
         }
     }
 }

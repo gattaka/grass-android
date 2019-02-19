@@ -48,10 +48,11 @@ public class LazyLoaderCountTask<T> extends URLGetTask<LazyListActivity<T>> {
 
     @Override
     protected void runOnWeakReference(final LazyListActivity<T> instance, URLTaskInfoBundle result) {
-        Log.d("LazyLoaderCountTask ", "(id: " + LazyLoaderCountTask.this.toString() + ") runOnWeakReference");
+        Log.d("LazyLoaderCountTask", "(id: " + LazyLoaderCountTask.this.toString() + ") runOnWeakReference");
         instance.listView.setOnScrollListener(new LazyLoaderScrollListener() {
             @Override
             public void loadMore(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.d("L.LoaderScrollListener", "currentPage: " + currentPage + ", totalCount: " + totalCount);
                 if (totalCount > currentPage * PAGE_SIZE) {
                     LazyLoaderFetchTask<T> fetchTask = new LazyLoaderFetchTask<>(instance);
                     fetchTask.execute(instance.createFetchURL(PAGE_SIZE, currentPage));

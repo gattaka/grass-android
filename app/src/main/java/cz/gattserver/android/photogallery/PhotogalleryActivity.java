@@ -34,8 +34,6 @@ import cz.gattserver.android.lazyloader.LazyLoaderScrollListener;
 
 public class PhotogalleryActivity extends GrassActivity {
 
-    private static String msg = "GrassAPP: ";
-
     private String id;
     private int totalCount = 0;
     private int currentMini = 0;
@@ -82,7 +80,7 @@ public class PhotogalleryActivity extends GrassActivity {
         // http://gattserver.cz/ws/pg/gallery?id=383
         fetchTask.execute(Config.PG_DETAIL_RESOURCE + "?id=" + id);
 
-        Log.d(msg, "The onCreate() event");
+        Log.d("PhotogalleryActivity", "The onCreate() event");
     }
 
     public void addMiniature(URLTaskInfoBundle bundle) {
@@ -114,13 +112,14 @@ public class PhotogalleryActivity extends GrassActivity {
             listView.setOnScrollListener(new LazyLoaderScrollListener(1) {
                 @Override
                 public void loadMore(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    Log.d("LazyLoaderCountTask", "load() event");
+                    Log.d("LazyLoaderCountTask", "currentMini: " + currentMini + ", totalCount: " + totalCount);
                     if (totalCount > currentMini) {
                         URLGetTask<PhotogalleryActivity> fetchTask = new URLGetTask<>(PhotogalleryActivity.this, new PhotogalleryFetchMiniatureAction());
                         // http://gattserver.cz/ws/pg/mini?id=383&fileName=31252889_10211544311583314_2288872652829360128_n.jpg
                         fetchTask.execute(Config.PHOTO_MINIATURE_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(photoNames[currentMini]), photoNames[currentMini], id);
                         currentMini++;
-                    } else {
+                    }
+                    if (totalCount <= currentMini) {
                         listView.removeFooterView(progressBar);
                     }
                 }
@@ -142,7 +141,7 @@ public class PhotogalleryActivity extends GrassActivity {
             });
 
         } catch (JSONException e) {
-            Log.e(msg, "JSONObject", e);
+            Log.e("PhotogalleryActivity", "JSONObject", e);
         }
     }
 
