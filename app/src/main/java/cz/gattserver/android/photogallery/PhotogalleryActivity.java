@@ -1,7 +1,6 @@
 package cz.gattserver.android.photogallery;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,14 +28,13 @@ import cz.gattserver.android.common.ImageItemArrayAdapter;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.interfaces.ImageItemTO;
-import cz.gattserver.android.lazyloader.LazyListActivity;
 import cz.gattserver.android.lazyloader.LazyLoaderScrollListener;
 
 public class PhotogalleryActivity extends GrassActivity {
 
     private String id;
     private int totalCount = 0;
-    private int currentMini = 0;
+    private int currentSlideshow = 0;
 
     private ListView listView;
     private ProgressBar progressBar;
@@ -112,14 +110,14 @@ public class PhotogalleryActivity extends GrassActivity {
             listView.setOnScrollListener(new LazyLoaderScrollListener(1) {
                 @Override
                 public void loadMore(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    Log.d("LazyLoaderCountTask", "currentMini: " + currentMini + ", totalCount: " + totalCount);
-                    if (totalCount > currentMini) {
+                    Log.d("LazyLoaderCountTask", "currentSlideshow: " + currentSlideshow + ", totalCount: " + totalCount);
+                    if (totalCount > currentSlideshow) {
                         URLGetTask<PhotogalleryActivity> fetchTask = new URLGetTask<>(PhotogalleryActivity.this, new PhotogalleryFetchMiniatureAction());
                         // http://gattserver.cz/ws/pg/mini?id=383&fileName=31252889_10211544311583314_2288872652829360128_n.jpg
-                        fetchTask.execute(Config.PHOTO_MINIATURE_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(photoNames[currentMini]), photoNames[currentMini], id);
-                        currentMini++;
+                        fetchTask.execute(Config.PHOTO_SLIDESHOW_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(photoNames[currentSlideshow]), photoNames[currentSlideshow], id);
+                        currentSlideshow++;
                     }
-                    if (totalCount <= currentMini) {
+                    if (totalCount <= currentSlideshow) {
                         listView.removeFooterView(progressBar);
                     }
                 }

@@ -14,6 +14,7 @@ public class Config {
     public static final String PG_COUNT_RESOURCE = PG_ROOT + "/count";
     public static final String PG_DETAIL_RESOURCE = PG_ROOT + "/gallery";
     public static final String PHOTO_MINIATURE_RESOURCE = PG_ROOT + "/mini";
+    public static final String PHOTO_SLIDESHOW_RESOURCE = PG_ROOT + "/slideshow";
     public static final String PHOTO_DETAIL_RESOURCE = PG_ROOT + "/photo";
 
     public static final String RECIPES_ROOT = SERVER_ROOT + "/ws/recipes";
