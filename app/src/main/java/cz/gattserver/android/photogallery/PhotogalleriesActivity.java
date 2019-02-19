@@ -1,6 +1,7 @@
 package cz.gattserver.android.photogallery;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -75,7 +76,7 @@ public class PhotogalleriesActivity extends LazyListActivity<ItemTO> {
     protected String createCountURL() {
         String url;
         if (filterText.getText() != null && !filterText.getText().toString().trim().isEmpty()) {
-            url = Config.PG_COUNT_RESOURCE + "?filter=" + filterText.getText().toString();
+            url = Config.PG_COUNT_RESOURCE + "?filter=" + Uri.encode(filterText.getText().toString());
         } else {
             url = Config.PG_COUNT_RESOURCE;
         }
@@ -87,7 +88,7 @@ public class PhotogalleriesActivity extends LazyListActivity<ItemTO> {
     protected String createFetchURL(int pageSize, int page) {
         String url;
         if (filterText.getText() != null && !filterText.getText().toString().trim().isEmpty()) {
-            url = Config.PG_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page + "&filter=" + filterText.getText().toString();
+            url = Config.PG_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page + "&filter=" + Uri.encode(filterText.getText().toString());
         } else {
             url = Config.PG_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page;
         }

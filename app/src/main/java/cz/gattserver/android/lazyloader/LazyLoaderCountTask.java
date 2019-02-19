@@ -57,7 +57,7 @@ public class LazyLoaderCountTask<T> extends URLGetTask<LazyListActivity<T>> {
                     fetchTask.execute(instance.createFetchURL(PAGE_SIZE, currentPage));
                     currentPage++;
                 }
-                if (totalCount > currentPage * PAGE_SIZE) {
+                if (totalCount <= currentPage * PAGE_SIZE) {
                     instance.listView.removeFooterView(instance.progressBar);
                 }
             }
