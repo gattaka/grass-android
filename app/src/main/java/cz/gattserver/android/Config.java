@@ -2,8 +2,8 @@ package cz.gattserver.android;
 
 public class Config {
 
-    //public static final String SERVER_ROOT = "http://gattserver.cz";
-    public static final String SERVER_ROOT = "http://10.0.2.2:8180/web";
+    public static final String SERVER_ROOT = "http://gattserver.cz";
+    //public static final String SERVER_ROOT = "http://10.0.2.2:8180/web";
 
     public static final String ARTICLES_ROOT = SERVER_ROOT + "/ws/articles";
     public static final String ARTICLES_CREATE = ARTICLES_ROOT + "/create";
