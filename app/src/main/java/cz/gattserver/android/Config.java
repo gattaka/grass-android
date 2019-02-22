@@ -17,6 +17,11 @@ public class Config {
     public static final String PHOTO_SLIDESHOW_RESOURCE = PG_ROOT + "/slideshow";
     public static final String PHOTO_DETAIL_RESOURCE = PG_ROOT + "/photo";
 
+    public static final String BOOKS_ROOT = SERVER_ROOT + "/ws/books";
+    public static final String BOOKS_LIST_RESOURCE = BOOKS_ROOT + "/list";
+    public static final String BOOKS_COUNT_RESOURCE = BOOKS_ROOT + "/count";
+    public static final String BOOK_DETAIL_RESOURCE = BOOKS_ROOT + "/book";
+
     public static final String RECIPES_ROOT = SERVER_ROOT + "/ws/recipes";
     public static final String RECIPES_LIST_RESOURCE = RECIPES_ROOT + "/list";
     public static final String RECIPES_COUNT_RESOURCE = RECIPES_ROOT + "/count";

@@ -33,6 +33,8 @@
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleryActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotoActivity"></activity>
         <activity android:name="cz.gattserver.android.messages.MessagesActivity"></activity>
+        <activity android:name="cz.gattserver.android.books.BooksActivity"></activity>
+        <activity android:name="cz.gattserver.android.books.BookActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

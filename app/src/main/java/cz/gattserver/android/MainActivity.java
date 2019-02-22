@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.gattserver.android.books.BooksActivity;
 import cz.gattserver.android.campgames.CampgamesActivity;
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
@@ -61,6 +62,13 @@ public class MainActivity extends GrassActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CampgamesActivity.class);
+                startActivity(intent);
+            }
+        }));
+        buttonDefinitions.add(new ButtonDefinition("Knihy", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BooksActivity.class);
                 startActivity(intent);
             }
         }));
