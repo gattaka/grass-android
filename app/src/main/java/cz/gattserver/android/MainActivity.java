@@ -16,6 +16,7 @@ import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.drinks.DrinksActivity;
 import cz.gattserver.android.messages.MessagesActivity;
+import cz.gattserver.android.photogallery.PhotoMenuActivity;
 import cz.gattserver.android.photogallery.PhotogalleriesActivity;
 import cz.gattserver.android.recipes.RecipesActivity;
 import cz.gattserver.android.songs.SongsActivity;
@@ -30,10 +31,10 @@ public class MainActivity extends GrassActivity {
         setTitle("GRASS Mobile");
 
         List<ButtonDefinition> buttonDefinitions = new ArrayList<>();
-        buttonDefinitions.add(new ButtonDefinition("Fotogalerie", new View.OnClickListener() {
+        buttonDefinitions.add(new ButtonDefinition("Fotky", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PhotogalleriesActivity.class);
+                Intent intent = new Intent(MainActivity.this, PhotoMenuActivity.class);
                 startActivity(intent);
             }
         }));

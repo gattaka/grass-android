@@ -25,6 +25,7 @@ import java.util.Map;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLPostTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.interfaces.MessageTO;
@@ -90,7 +91,7 @@ public class MessagesActivity extends GrassActivity {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     URLPostTask<MessagesActivity> uploadTask = new URLPostTask<>(MessagesActivity.this,
-                                            new URLPostTask.OnSuccessAction<MessagesActivity>() {
+                                            new OnSuccessAction<MessagesActivity>() {
                                                 @Override
                                                 public void run(MessagesActivity urlTaskClient, URLTaskInfoBundle result) {
                                                     if (result.isSuccess()) {

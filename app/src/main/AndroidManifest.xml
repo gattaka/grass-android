@@ -29,9 +29,11 @@
         <activity android:name="cz.gattserver.android.drinks.RumActivity"></activity>
         <activity android:name="cz.gattserver.android.drinks.WhiskiesActivity"></activity>
         <activity android:name="cz.gattserver.android.drinks.WhiskeyActivity"></activity>
+        <activity android:name="cz.gattserver.android.photogallery.PhotoMenuActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleriesActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleryActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotoActivity"></activity>
+        <activity android:name="cz.gattserver.android.photogallery.PhotoUploadActivity"></activity>
         <activity android:name="cz.gattserver.android.messages.MessagesActivity"></activity>
         <activity android:name="cz.gattserver.android.books.BooksActivity"></activity>
         <activity android:name="cz.gattserver.android.books.BookActivity"></activity>
@@ -39,5 +41,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>

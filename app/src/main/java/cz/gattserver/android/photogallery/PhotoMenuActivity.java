@@ -1,4 +1,4 @@
-package cz.gattserver.android.drinks;
+package cz.gattserver.android.photogallery;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,40 +13,36 @@ import java.util.List;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.drinks.BeersActivity;
+import cz.gattserver.android.drinks.RumsActivity;
+import cz.gattserver.android.drinks.WhiskiesActivity;
 
-public class DrinksActivity extends GrassActivity {
+public class PhotoMenuActivity extends GrassActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drinks);
+        setContentView(R.layout.activity_photomenu);
 
-        setTitle("Nápoje");
+        setTitle("Fotky");
 
         List<ButtonDefinition> buttonDefinitions = new ArrayList<>();
-        buttonDefinitions.add(new ButtonDefinition("Pivo", new View.OnClickListener() {
+        buttonDefinitions.add(new ButtonDefinition("Fotogalerie", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DrinksActivity.this, BeersActivity.class);
+                Intent intent = new Intent(PhotoMenuActivity.this, PhotogalleriesActivity.class);
                 startActivity(intent);
             }
         }));
-        buttonDefinitions.add(new ButtonDefinition("Rum", new View.OnClickListener() {
+        buttonDefinitions.add(new ButtonDefinition("Upload fotek", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DrinksActivity.this, RumsActivity.class);
-                startActivity(intent);
-            }
-        }));
-        buttonDefinitions.add(new ButtonDefinition("Whiskey", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DrinksActivity.this, WhiskiesActivity.class);
+                Intent intent = new Intent(PhotoMenuActivity.this, PhotoUploadActivity.class);
                 startActivity(intent);
             }
         }));
 
-        LinearLayout mainLayout = findViewById(R.id.drinksLayout);
+        LinearLayout mainLayout = findViewById(R.id.photomenuLayout);
         for (ButtonDefinition bdef : buttonDefinitions) {
             Button btn = new Button(this);
             btn.setText(bdef.getCaption());
@@ -54,6 +50,6 @@ public class DrinksActivity extends GrassActivity {
             mainLayout.addView(btn);
         }
 
-        Log.d("DrinksActivity", "The onCreate() event");
+        Log.d("PhotoMenuActivity", "The onCreate() event");
     }
 }

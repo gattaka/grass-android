@@ -13,6 +13,7 @@ import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
+import cz.gattserver.android.common.OnSuccessAction;
 
 public class RecipeActivity extends GrassActivity {
 
@@ -26,7 +27,7 @@ public class RecipeActivity extends GrassActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 
-        URLGetTask<RecipeActivity> fetchTask = new URLGetTask<>(this, new URLGetTask.OnSuccessAction<RecipeActivity>() {
+        URLGetTask<RecipeActivity> fetchTask = new URLGetTask<>(this, new OnSuccessAction<RecipeActivity>() {
             @Override
             public void run(RecipeActivity urlTaskClient, URLTaskInfoBundle bundle) {
                 urlTaskClient.init(bundle.getResultAsStringUTF());

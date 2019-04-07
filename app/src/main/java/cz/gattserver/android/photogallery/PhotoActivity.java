@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.OnSwipeTouchListener;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
@@ -25,7 +26,7 @@ public class PhotoActivity extends GrassActivity {
     private float mScaleFactor = 1.0f;
     private ImageView imageView;
 
-    private static class PhotoActivityInitAction implements URLGetTask.OnSuccessAction<PhotoActivity> {
+    private static class PhotoActivityInitAction implements OnSuccessAction<PhotoActivity> {
         @Override
         public void run(PhotoActivity urlTaskClient, URLTaskInfoBundle bundle) {
             urlTaskClient.init(bundle.getResult());

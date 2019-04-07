@@ -19,17 +19,9 @@ public class URLPostTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
     private WeakReference<T> urlTaskClientWeakReference;
     private OnSuccessAction<T> onSuccessAction;
 
-    public interface OnSuccessAction<T> {
-        void run(T urlTaskClient, URLTaskInfoBundle result);
-    }
-
     public URLPostTask(T urlTaskClient, OnSuccessAction<T> onSuccessAction) {
         this.urlTaskClientWeakReference = new WeakReference<>(urlTaskClient);
         this.onSuccessAction = onSuccessAction;
-    }
-
-    public URLPostTask(T urlTaskClient) {
-        this(urlTaskClient, null);
     }
 
     @Override

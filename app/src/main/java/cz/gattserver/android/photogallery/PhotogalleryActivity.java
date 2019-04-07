@@ -26,6 +26,7 @@ import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.ImageItemArrayAdapter;
 import cz.gattserver.android.common.URLGetTask;
+import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.interfaces.ImageItemTO;
 import cz.gattserver.android.lazyloader.LazyLoaderScrollListener;
@@ -40,7 +41,7 @@ public class PhotogalleryActivity extends GrassActivity {
     private ProgressBar progressBar;
     private ArrayAdapter<ImageItemTO> adapter;
 
-    private static class PhotogalleryInitAction implements URLGetTask.OnSuccessAction<PhotogalleryActivity> {
+    private static class PhotogalleryInitAction implements OnSuccessAction<PhotogalleryActivity> {
 
         @Override
         public void run(PhotogalleryActivity instance, URLTaskInfoBundle bundle) {
@@ -55,7 +56,7 @@ public class PhotogalleryActivity extends GrassActivity {
         }
     }
 
-    private static class PhotogalleryFetchMiniatureAction implements URLGetTask.OnSuccessAction<PhotogalleryActivity> {
+    private static class PhotogalleryFetchMiniatureAction implements OnSuccessAction<PhotogalleryActivity> {
 
         @Override
         public void run(PhotogalleryActivity instance, URLTaskInfoBundle bundle) {

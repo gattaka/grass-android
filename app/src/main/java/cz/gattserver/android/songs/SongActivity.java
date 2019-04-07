@@ -14,12 +14,13 @@ import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
+import cz.gattserver.android.common.OnSuccessAction;
 
 public class SongActivity extends GrassActivity {
 
     private String msg = "GrassAPP: ";
 
-    private static class SongActivityInitAction implements URLGetTask.OnSuccessAction<SongActivity> {
+    private static class SongActivityInitAction implements OnSuccessAction<SongActivity> {
         @Override
         public void run(SongActivity urlTaskClient, URLTaskInfoBundle bundle) {
             urlTaskClient.init(bundle.getResultAsStringUTF());
