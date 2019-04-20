@@ -1,16 +1,12 @@
 package cz.gattserver.android.photogallery;
 
-import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -18,22 +14,15 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
-import cz.gattserver.android.common.OnSuccessAction;
-import cz.gattserver.android.common.URLTaskInfoBundle;
-import cz.gattserver.android.common.URLMultipartTask;
 import cz.gattserver.android.interfaces.PhotoTO;
 
 public class PhotoUploadActivity extends GrassActivity {
@@ -67,13 +56,6 @@ public class PhotoUploadActivity extends GrassActivity {
 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-
-                    Log.d("PhotoUploadActivity", "id: " + cursor.getType(0));
-                    Log.d("PhotoUploadActivity", "title: " + cursor.getType(1));
-                    Log.d("PhotoUploadActivity", "data: " + cursor.getType(2));
-                    Log.d("PhotoUploadActivity", "mime: " + cursor.getType(3));
-                    Log.d("PhotoUploadActivity", "size: " + cursor.getType(4));
-
                     int id = cursor.getInt(0);
                     String title = cursor.getString(1);
                     String data = cursor.getString(2);
@@ -101,56 +83,8 @@ public class PhotoUploadActivity extends GrassActivity {
 
         } else {
 
-            final Button sendBtn = new Button(this);
-            sendBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(PhotoUploadActivity.this)
-                            .setTitle("Odeslání fotek")
-                            .setMessage("Opravdu odeslat fotky?")
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    URLMultipartTask<PhotoUploadActivity> uploadTask = new URLMultipartTask<>(PhotoUploadActivity.this,
-                                            new OnSuccessAction<PhotoUploadActivity>() {
-                                                @Override
-                                                public void run(PhotoUploadActivity urlTaskClient, URLTaskInfoBundle result) {
-                                                    if (result.isSuccess()) {
-                                                        if (result.getResponseCode() == 200) {
-                                                            Toast.makeText(urlTaskClient, "Fotky byly úspěšně nahrány", Toast.LENGTH_SHORT).show();
-                                                        } else {
-                                                            new AlertDialog.Builder(PhotoUploadActivity.this)
-                                                                    .setTitle("Chyba")
-                                                                    .setMessage("Fotky se nezdařilo odeslat -- server code: " + result.getResponseCode())
-                                                                    .setIcon(android.R.drawable.ic_dialog_alert).show();
-                                                        }
-                                                    } else {
-                                                        new AlertDialog.Builder(PhotoUploadActivity.this)
-                                                                .setTitle("Chyba")
-                                                                .setMessage("Fotky se nezdařilo odeslat: " + result.getError().getLocalizedMessage())
-                                                                .setIcon(android.R.drawable.ic_dialog_alert).show();
-                                                    }
-                                                }
-                                            });
-                                    SimpleDateFormat sdf = new SimpleDateFormat("d_M_yyyy_HH_mm");
-                                    List<String> params = new ArrayList<>();
-                                    params.add(Config.PG_CREATE);
-                                    params.add("PG_import_" + sdf.format(new Date()));
-                                    for (PhotoTO p : choosenPhotos.values()) {
-                                        params.add(p.getData());
-                                        params.add(new File(p.getData()).getName());
-                                    }
-                                    String[] arrParams = new String[params.size()];
-                                    arrParams = params.toArray(arrParams);
-                                    uploadTask.execute(arrParams);
-                                    constructTable();
-                                }
-                            }).setNegativeButton(android.R.string.no, null).show();
-                }
-            });
             final String btnCaptionPrefix = "Odeslat na server";
-            sendBtn.setGravity(Gravity.CENTER);
-            sendBtn.setEnabled(false);
+            final Button sendBtn = PhotosUploadButtonFactory.createUploadButton(PhotoUploadActivity.this, choosenPhotos);
             tableLayout.addView(sendBtn);
 
             for (final PhotoTO m : photos) {

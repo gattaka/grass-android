@@ -13,9 +13,6 @@ import java.util.List;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
-import cz.gattserver.android.drinks.BeersActivity;
-import cz.gattserver.android.drinks.RumsActivity;
-import cz.gattserver.android.drinks.WhiskiesActivity;
 
 public class PhotoMenuActivity extends GrassActivity {
 
@@ -38,6 +35,13 @@ public class PhotoMenuActivity extends GrassActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PhotoMenuActivity.this, PhotoUploadActivity.class);
+                startActivity(intent);
+            }
+        }));
+        buttonDefinitions.add(new ButtonDefinition("Upload fotek (Lazy)", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PhotoMenuActivity.this, PhonePhotosListActivity.class);
                 startActivity(intent);
             }
         }));

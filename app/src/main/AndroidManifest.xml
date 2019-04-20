@@ -34,6 +34,7 @@
         <activity android:name="cz.gattserver.android.photogallery.PhotogalleryActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotoActivity"></activity>
         <activity android:name="cz.gattserver.android.photogallery.PhotoUploadActivity"></activity>
+        <activity android:name="cz.gattserver.android.photogallery.PhonePhotosListActivity"></activity>
         <activity android:name="cz.gattserver.android.messages.MessagesActivity"></activity>
         <activity android:name="cz.gattserver.android.books.BooksActivity"></activity>
         <activity android:name="cz.gattserver.android.books.BookActivity"></activity>
