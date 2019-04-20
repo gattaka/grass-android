@@ -140,7 +140,9 @@ public class PhonePhotosListActivity extends GrassActivity {
 
         listView = findViewById(R.id.phonePhotosList);
         listView.addFooterView(progressBar = new ProgressBar(this));
-        adapter = new PhotoArrayAdapter(this, R.layout.photo_listview_row, new PhotoArrayAdapter.OnCheckedChangeListener() {
+
+        // R.layout.photo_listview_row
+        adapter = new PhotoArrayAdapter(this, R.layout.photo_listview_row2, new PhotoArrayAdapter.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(PhotoTO item, boolean isChecked) {
                 if (isChecked) {
@@ -161,6 +163,7 @@ public class PhonePhotosListActivity extends GrassActivity {
             @Override
             public void onCreation(PhotoTO item, CheckBox checkBox) {
                 checkBoxMap.put(item.getId(), checkBox);
+                Log.d("PhonePhotosListActivity", "CheckBox map size " + checkBoxMap);
             }
         });
         listView.setAdapter(adapter);

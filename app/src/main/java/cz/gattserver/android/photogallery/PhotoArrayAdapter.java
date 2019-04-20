@@ -59,15 +59,6 @@ public class PhotoArrayAdapter extends ArrayAdapter<PhotoTO> {
 
         final PhotoTO item = getItem(position);
         if (item != null) {
-            CheckBox checkBox = view.findViewById(R.id.checkbox);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    checkBoxListener.onCheckedChanged(item, isChecked);
-                }
-            });
-            creationListener.onCreation(item, checkBox);
-
             ImageView imageView = view.findViewById(R.id.itemImage);
             File image = new File(item.getData());
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
