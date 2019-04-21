@@ -75,11 +75,21 @@ public class PhotoArrayAdapter extends ArrayAdapter<PhotoTO> {
             File image = new File(item.getData());
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
-            bitmap = Bitmap.createScaledBitmap(bitmap, 128, 128, true);
-            imageView.setImageBitmap(bitmap);
+            int h = bitmap.getHeight();
+            int w = bitmap.getWidth();
+            float min = 128f;
+            if (h > w) {
+                float r = min / h;
+                h = (int) min;
+                w = (int) (r * w);
+            } else {
+                float r = min / w;
+                w = (int) min;
+                h = (int) (r * h);
+            }
 
-            TextView textView = view.findViewById(R.id.name);
-            textView.setText(String.valueOf(item.getId()));
+            bitmap = Bitmap.createScaledBitmap(bitmap, w, h, true);
+            imageView.setImageBitmap(bitmap);
         }
 
         return view;
