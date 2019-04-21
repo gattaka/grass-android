@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Checkable;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -21,22 +24,22 @@ import cz.gattserver.android.interfaces.PhotoTO;
 public class PhotoArrayAdapter extends ArrayAdapter<PhotoTO> {
 
     public interface OnCheckedChangeListener {
-        void onCheckedChanged(PhotoTO item, boolean isChecked);
+        void onCheckedChanged(CompoundButton buttonView, PhotoTO item, boolean isChecked);
     }
 
-    public interface OnCheckboxCreationListener {
-        void onCreation(PhotoTO item, CheckBox checkBox);
+    public interface OnCheckBoxCreateListener {
+        void onCreate(CompoundButton buttonView, PhotoTO item);
     }
 
     private int resource;
     private OnCheckedChangeListener checkBoxListener;
-    private OnCheckboxCreationListener creationListener;
+    private OnCheckBoxCreateListener createListener;
 
-    public PhotoArrayAdapter(@NonNull Context context, int resource, OnCheckedChangeListener checkBoxListener, OnCheckboxCreationListener creationListener) {
+    public PhotoArrayAdapter(@NonNull Context context, int resource, OnCheckedChangeListener checkBoxListener, OnCheckBoxCreateListener createListener) {
         super(context, resource);
         this.resource = resource;
         this.checkBoxListener = checkBoxListener;
-        this.creationListener = creationListener;
+        this.createListener = createListener;
     }
 
     @Override
@@ -59,12 +62,24 @@ public class PhotoArrayAdapter extends ArrayAdapter<PhotoTO> {
 
         final PhotoTO item = getItem(position);
         if (item != null) {
+            CheckBox checkBox = view.findViewById(R.id.chk);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    checkBoxListener.onCheckedChanged(buttonView, item, isChecked);
+                }
+            });
+            createListener.onCreate(checkBox, item);
+
             ImageView imageView = view.findViewById(R.id.itemImage);
             File image = new File(item.getData());
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
             bitmap = Bitmap.createScaledBitmap(bitmap, 128, 128, true);
             imageView.setImageBitmap(bitmap);
+
+            TextView textView = view.findViewById(R.id.name);
+            textView.setText(String.valueOf(item.getId()));
         }
 
         return view;

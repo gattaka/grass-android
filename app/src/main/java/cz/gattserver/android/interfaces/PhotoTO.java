@@ -8,6 +8,10 @@ public class PhotoTO {
     private String mime;
     private int size;
 
+    public PhotoTO(int id) {
+        this.id = id;
+    }
+
     public PhotoTO(int id, String title, String data, String mime, int size) {
         this.id = id;
         this.title = title;
