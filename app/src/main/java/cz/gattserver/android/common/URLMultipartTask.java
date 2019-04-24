@@ -60,14 +60,14 @@ public class URLMultipartTask<T> extends AsyncTask< URLTaskParamTO, String, URLT
             outputStream.writeBytes(taskParamTO.getParams()[0]);
             outputStream.writeBytes(LINE_END);
 
-            for (int i = 1; i < params.length; i += 2) {
+            for (int i = 1; i < taskParamTO.getParams().length; i += 2) {
 
                 // -- + boundary + CRLF
                 outputStream.writeBytes(twoHyphens + boundary + LINE_END);
 
                 FileInputStream fileInputStream;
 
-                outputStream.writeBytes("Content-Disposition: form-data; name=\"" + FILES_FORM_DATA_NAME + "\"; filename=\"" + params[i + 1] + "\"" + LINE_END);
+                outputStream.writeBytes("Content-Disposition: form-data; name=\"" + FILES_FORM_DATA_NAME + "\"; filename=\"" + taskParamTO.getParams()[i + 1] + "\"" + LINE_END);
                 outputStream.writeBytes("Content-Type: application/octet-stream" + LINE_END);
                 outputStream.writeBytes(LINE_END);
 

@@ -33,10 +33,15 @@ public class URLGetTask<T> extends AsyncTask<URLTaskParamTO, Void, URLTaskInfoBu
             if (taskParamTO.getSessionId() != null) {
                 connection.setRequestProperty("Cookie", "JSESSIONID=" + taskParamTO.getSessionId());
             }
-            InputStream is = connection.getInputStream();
-            byte[] bytes = ByteUtils.readBytes(is);
-            URLTaskInfoBundle bundle = URLTaskInfoBundle.onSuccess(taskParamTO, bytes, connection.getResponseCode());
+            int responseCode = connection.getResponseCode();
             Log.d("URLGetTask", "Success! URL GET: " + address);
+            if (responseCode == 200) {
+                InputStream is = connection.getInputStream();
+                byte[] bytes = ByteUtils.readBytes(is);
+                URLTaskInfoBundle bundle = URLTaskInfoBundle.onSuccess(taskParamTO, bytes, responseCode);
+                return bundle;
+            }
+            URLTaskInfoBundle bundle = URLTaskInfoBundle.onSuccess(taskParamTO, new byte[]{}, responseCode);
             return bundle;
         } catch (Exception ex) {
             Log.e("URLGetTask", "Failure. URL GET: " + address, ex);

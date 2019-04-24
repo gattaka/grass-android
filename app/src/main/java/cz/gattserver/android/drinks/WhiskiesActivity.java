@@ -44,6 +44,6 @@ public class WhiskiesActivity extends LazyListActivity<RatedItemTO> {
 
     @Override
     protected URLTaskParamTO createFetchTaskParamTO(int pageSize, int page) {
-        return new URLTaskParamTO(Config.DRINKS_WHISKEY_LIST_RESOURCE, "?pageSize=" + pageSize + "&page=" + page);
+        return new URLTaskParamTO(Config.DRINKS_WHISKEY_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page);
     }
 }

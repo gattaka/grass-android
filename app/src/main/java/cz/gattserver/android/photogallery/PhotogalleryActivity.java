@@ -48,7 +48,14 @@ public class PhotogalleryActivity extends GrassActivity {
         @Override
         public void run(PhotogalleryActivity instance, URLTaskInfoBundle bundle) {
             if (bundle.isSuccess()) {
-                instance.init(bundle.getResultAsStringUTF());
+                if (bundle.getResponseCode() == 200) {
+                    instance.init(bundle.getResultAsStringUTF());
+                } else {
+                    new AlertDialog.Builder(instance)
+                            .setTitle("Chyba")
+                            .setMessage("Galerie není dostupná nebo porušená")
+                            .setIcon(android.R.drawable.ic_dialog_alert).show();
+                }
             } else {
                 new AlertDialog.Builder(instance)
                         .setTitle("Chyba")
