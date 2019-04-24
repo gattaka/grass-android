@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,33 +100,54 @@ public class MainActivity extends GrassActivity {
         Log.d("GrassAPP", "The onCreate() event");
     }
 
+    private void createLoginBtn() {
+        final LinearLayout loginLayout = findViewById(R.id.loginLayout);
+        Button btn = new Button(MainActivity.this);
+        btn.setText("Přihlásit se");
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+        loginLayout.addView(btn);
+    }
+
     private void createLoginComponents() {
         final LinearLayout loginLayout = findViewById(R.id.loginLayout);
         loginLayout.removeAllViews();
 
         SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-        String sessionid = settings.getString(LoginActivity.VAR_NAME, null);
+        final String sessionid = settings.getString(LoginActivity.VAR_NAME, null);
 
         if (sessionid == null || sessionid.isEmpty()) {
-            Button btn = new Button(MainActivity.this);
-            btn.setText("Přihlásit se");
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    // new Intent(LoginActivity.class.getName())
-                    startActivityForResult(intent, 0);
-                }
-            });
-            loginLayout.addView(btn);
+            createLoginBtn();
         } else {
             URLGetTask<MainActivity> loggedInTask = new URLGetTask<>(this, new OnSuccessAction<MainActivity>() {
                 @Override
                 public void run(MainActivity urlTaskClient, URLTaskInfoBundle bundle) {
+                    if (!bundle.isSuccess() || bundle.getResponseCode() != 200) {
+                        Toast.makeText(urlTaskClient, "Nezdařilo se obnovit přihlášení", Toast.LENGTH_SHORT).show();
+                        createLoginBtn();
+                        return;
+                    }
+
                     Button btn = new Button(MainActivity.this);
                     btn.setText("Odhlásit se (" + bundle.getResultAsStringUTF() + ")");
-                    // TODO
-                    // btn.setOnClickListener(bdef.getClickListener());
+                    btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            URLGetTask<MainActivity> logoutTask = new URLGetTask<>(MainActivity.this, new OnSuccessAction<MainActivity>() {
+                                @Override
+                                public void run(MainActivity urlTaskClient, URLTaskInfoBundle bundle) {
+                                    if (bundle.isSuccess() && bundle.getResponseCode() == 200)
+                                        createLoginComponents();
+                                }
+                            });
+                            logoutTask.execute(Config.LOGGED, sessionid);
+                        }
+                    });
                     loginLayout.addView(btn);
                 }
             });
