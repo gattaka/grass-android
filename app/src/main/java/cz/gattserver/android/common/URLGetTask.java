@@ -3,8 +3,6 @@ package cz.gattserver.android.common;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
@@ -24,24 +22,6 @@ public class URLGetTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
         this(urlTaskClient, null);
     }
 
-    private byte[] readBytes(InputStream inputStream) throws IOException {
-        // this dynamically extends to take the bytes you read
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-
-        // this is storage overwritten on each iteration with bytes
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        // we need to know how may bytes were read to write them to the byteBuffer
-        int len;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-
-        // and then we can return your byte array.
-        return byteBuffer.toByteArray();
-    }
-
     @Override
     protected URLTaskInfoBundle doInBackground(String... params) {
         String address = params[0];
@@ -49,8 +29,12 @@ public class URLGetTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
             Log.d("URLGetTask", "Trying... URL GET: " + address);
             URL url = new URL(params[0]);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            if (params.length > 1) {
+                String jsessionid = params[1];
+                connection.setRequestProperty("Cookie", "JSESSIONID=" + jsessionid);
+            }
             InputStream is = connection.getInputStream();
-            byte[] bytes = readBytes(is);
+            byte[] bytes = ByteUtils.readBytes(is);
             URLTaskInfoBundle bundle = URLTaskInfoBundle.onSuccess(params, bytes, connection.getResponseCode());
             Log.d("URLGetTask", "Success! URL GET: " + address);
             return bundle;

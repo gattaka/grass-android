@@ -34,13 +34,6 @@ public class PhotoMenuActivity extends GrassActivity {
         buttonDefinitions.add(new ButtonDefinition("Upload fotek", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PhotoMenuActivity.this, PhotoUploadActivity.class);
-                startActivity(intent);
-            }
-        }));
-        buttonDefinitions.add(new ButtonDefinition("Upload fotek (Lazy)", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Intent intent = new Intent(PhotoMenuActivity.this, PhonePhotosListActivity.class);
                 startActivity(intent);
             }

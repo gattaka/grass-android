@@ -3,18 +3,15 @@ package cz.gattserver.android.common;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class URLPostTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
+
+    private static final String LINE_END = "\r\n";
 
     private WeakReference<T> urlTaskClientWeakReference;
     private OnSuccessAction<T> onSuccessAction;
@@ -34,14 +31,33 @@ public class URLPostTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
             connection.setRequestProperty("Accept", "*/*");
             connection.setDoOutput(true);
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-            writer.write(params[1]);
-            writer.close();
+            connection.setDoInput(true);
 
-            connection.connect();
+            if (params.length > 1) {
+                if ((params.length - 1) % 2 != 0)
+                    throw new IllegalArgumentException("Po prvním parametru (adresa) musí následovat dvojice argumentů name:value");
 
-            Log.e("URLPostTask Response", connection.getResponseMessage());
-            return URLTaskInfoBundle.onSuccess(params, connection.getResponseMessage().getBytes(), connection.getResponseCode());
+                DataOutputStream outputStream;
+                outputStream = new DataOutputStream(connection.getOutputStream());
+
+                for (int s = 1; s < params.length; s += 2) {
+                    outputStream.writeBytes(params[s] + "=" + params[s + 1]);
+                    if (s == params.length - 1) {
+                        outputStream.writeBytes(LINE_END);
+                    } else {
+                        outputStream.writeBytes("&");
+                    }
+                }
+
+                outputStream.flush();
+                outputStream.close();
+            }
+
+            InputStream is = connection.getInputStream();
+            byte[] bytes = ByteUtils.readBytes(is);
+
+            Log.e("URLPostTask", "ResponseCode: " + connection.getResponseCode());
+            return URLTaskInfoBundle.onSuccess(params, bytes, connection.getResponseCode());
         } catch (Exception e) {
             Log.e("URLPostTask Error", e.toString());
             return URLTaskInfoBundle.onFail(params, e);

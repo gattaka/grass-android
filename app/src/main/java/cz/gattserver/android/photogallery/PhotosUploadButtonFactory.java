@@ -56,7 +56,7 @@ class PhotosUploadButtonFactory {
                                         });
                                 SimpleDateFormat sdf = new SimpleDateFormat("d_M_yyyy_HH_mm");
                                 List<String> params = new ArrayList<>();
-                                params.add(Config.PG_CREATE);
+                                params.add(Config.PG_CREATE_FAST);
                                 params.add("PG_import_" + sdf.format(new Date()));
                                 for (PhotoTO p : choosenPhotos.values()) {
                                     params.add(p.getData());

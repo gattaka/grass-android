@@ -119,7 +119,7 @@ public class MessagesActivity extends GrassActivity {
                                         sb.append(m.getBody());
                                         sb.append("\n\n");
                                     }
-                                    uploadTask.execute(Config.ARTICLES_CREATE, "text=" + sb.toString());
+                                    uploadTask.execute(Config.ARTICLES_CREATE, "text", sb.toString());
                                     constructTable();
                                 }
                             })

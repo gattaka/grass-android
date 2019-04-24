@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cz.gattserver.android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,39 +13,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="cz.gattserver.android.MainActivity">
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="cz.gattserver.android.recipes.RecipesActivity"></activity>
-        <activity android:name="cz.gattserver.android.recipes.RecipeActivity"></activity>
-        <activity android:name="cz.gattserver.android.songs.SongsActivity"></activity>
-        <activity android:name="cz.gattserver.android.songs.SongActivity"></activity>
-        <activity android:name="cz.gattserver.android.campgames.CampgamesActivity"></activity>
-        <activity android:name="cz.gattserver.android.campgames.CampgameActivity"></activity>
-        <activity android:name="cz.gattserver.android.drinks.DrinksActivity"></activity>
-        <activity android:name="cz.gattserver.android.drinks.BeersActivity"></activity>
-        <activity android:name="cz.gattserver.android.drinks.BeerActivity"></activity>
-        <activity android:name="cz.gattserver.android.drinks.RumsActivity"></activity>
-        <activity android:name="cz.gattserver.android.drinks.RumActivity"></activity>
-        <activity android:name="cz.gattserver.android.drinks.WhiskiesActivity"></activity>
-        <activity android:name="cz.gattserver.android.drinks.WhiskeyActivity"></activity>
-        <activity android:name="cz.gattserver.android.photogallery.PhotoMenuActivity"></activity>
-        <activity android:name="cz.gattserver.android.photogallery.PhotogalleriesActivity"></activity>
-        <activity android:name="cz.gattserver.android.photogallery.PhotogalleryActivity"></activity>
-        <activity android:name="cz.gattserver.android.photogallery.PhotoActivity"></activity>
-        <activity android:name="cz.gattserver.android.photogallery.PhotoUploadActivity"></activity>
-        <activity android:name="cz.gattserver.android.photogallery.PhonePhotosListActivity"></activity>
-        <activity android:name="cz.gattserver.android.messages.MessagesActivity"></activity>
-        <activity android:name="cz.gattserver.android.books.BooksActivity"></activity>
-        <activity android:name="cz.gattserver.android.books.BookActivity"></activity>
+        <activity android:name=".recipes.RecipesActivity" />
+        <activity android:name=".recipes.RecipeActivity" />
+        <activity android:name=".songs.SongsActivity" />
+        <activity android:name=".songs.SongActivity" />
+        <activity android:name=".campgames.CampgamesActivity" />
+        <activity android:name=".campgames.CampgameActivity" />
+        <activity android:name=".drinks.DrinksActivity" />
+        <activity android:name=".drinks.BeersActivity" />
+        <activity android:name=".drinks.BeerActivity" />
+        <activity android:name=".drinks.RumsActivity" />
+        <activity android:name=".drinks.RumActivity" />
+        <activity android:name=".drinks.WhiskiesActivity" />
+        <activity android:name=".drinks.WhiskeyActivity" />
+        <activity android:name=".photogallery.PhotoMenuActivity" />
+        <activity android:name=".photogallery.PhotogalleriesActivity" />
+        <activity android:name=".photogallery.PhotogalleryActivity" />
+        <activity android:name=".photogallery.PhotoActivity" />
+        <activity android:name=".photogallery.PhonePhotosListActivity" />
+        <activity android:name=".messages.MessagesActivity" />
+        <activity android:name=".books.BooksActivity" />
+        <activity android:name=".books.BookActivity" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:label="@string/title_activity_login"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>
