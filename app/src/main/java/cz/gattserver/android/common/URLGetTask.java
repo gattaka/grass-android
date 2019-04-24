@@ -30,9 +30,8 @@ public class URLGetTask<T> extends AsyncTask<URLTaskParamTO, Void, URLTaskInfoBu
             Log.d("URLGetTask", "Trying... URL GET: " + address);
             URL url = new URL(address);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            if (taskParamTO.getSessionId() != null) {
+            if (taskParamTO.getSessionId() != null)
                 connection.setRequestProperty("Cookie", "JSESSIONID=" + taskParamTO.getSessionId());
-            }
             int responseCode = connection.getResponseCode();
             Log.d("URLGetTask", "Success! URL GET: " + address);
             if (responseCode == 200) {

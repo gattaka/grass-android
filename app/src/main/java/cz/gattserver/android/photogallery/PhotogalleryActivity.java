@@ -96,7 +96,7 @@ public class PhotogalleryActivity extends GrassActivity {
             return;
         byte[] image = bundle.getResult();
         Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-        adapter.add(new ImageItemTO(bundle.getTaskParamTO().getParams()[1], bundle.getTaskParamTO().getParams()[2], bitmap));
+        adapter.add(new ImageItemTO(bundle.getTaskParamTO().getParams()[0], bundle.getTaskParamTO().getParams()[1], bitmap));
     }
 
     public void init(String result) {
@@ -124,7 +124,7 @@ public class PhotogalleryActivity extends GrassActivity {
                     if (totalCount > currentSlideshow) {
                         URLGetTask<PhotogalleryActivity> fetchTask = new URLGetTask<>(PhotogalleryActivity.this, new PhotogalleryFetchMiniatureAction());
                         fetchTask.execute(new URLTaskParamTO(Config.PHOTO_SLIDESHOW_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(photoNames[currentSlideshow]),
-                                LoginUtils.getSessionid(PhotogalleryActivity.this)));
+                                LoginUtils.getSessionid(PhotogalleryActivity.this)).setParams(photoNames[currentSlideshow], id));
                         currentSlideshow++;
                     }
                     if (totalCount <= currentSlideshow) {
