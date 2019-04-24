@@ -1,7 +1,6 @@
 package cz.gattserver.android.login;
 
 import android.app.AlertDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,14 +12,13 @@ import android.widget.Toast;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.LoginUtils;
 import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLPostTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
+import cz.gattserver.android.common.URLTaskParamTO;
 
 public class LoginActivity extends GrassActivity {
-
-    public static final String PREFS_NAME = "GRASS_MOBILE_LOGIN";
-    public static final String VAR_NAME = "sessionid";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,11 +61,7 @@ public class LoginActivity extends GrassActivity {
                             public void run(LoginActivity urlTaskClient, URLTaskInfoBundle result) {
                                 if (result.isSuccess()) {
                                     if (result.getResponseCode() == 200) {
-                                        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                                        SharedPreferences.Editor editor = settings.edit();
-                                        editor.putString(VAR_NAME, result.getResultAsStringUTF());
-                                        editor.commit();
-
+                                        LoginUtils.saveSessionId(LoginActivity.this, result.getResultAsStringUTF());
                                         Toast.makeText(urlTaskClient, "Přihlášení proběhlo úspěšně", Toast.LENGTH_SHORT).show();
                                         setResult(1);
                                         finish();
@@ -90,7 +84,7 @@ public class LoginActivity extends GrassActivity {
                                 }
                             }
                         });
-                uploadTask.execute(Config.LOGIN, "login", login, "password", password);
+                uploadTask.execute(new URLTaskParamTO(Config.LOGIN, null).setParams("login", login, "password", password));
             }
         });
     }

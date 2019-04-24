@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class URLMultipartTask<T> extends AsyncTask<String, String, URLTaskInfoBundle> {
+public class URLMultipartTask<T> extends AsyncTask< URLTaskParamTO, String, URLTaskInfoBundle> {
 
     private static final String FILES_FORM_DATA_NAME = "files";
     private static final String GALLERY_NAME_FORM_DATA_NAME = "galleryName";
@@ -24,7 +24,8 @@ public class URLMultipartTask<T> extends AsyncTask<String, String, URLTaskInfoBu
     }
 
     @Override
-    protected URLTaskInfoBundle doInBackground(String[] params) {
+    protected URLTaskInfoBundle doInBackground(URLTaskParamTO[] params) {
+        URLTaskParamTO taskParamTO = params[0];
         Log.e("URLMultipartTask", "doInBackground");
         try {
             int serverResponseCode = 0;
@@ -34,7 +35,7 @@ public class URLMultipartTask<T> extends AsyncTask<String, String, URLTaskInfoBu
             int bytesRead, bytesAvailable, bufferSize;
             byte[] buffer;
             int maxBufferSize = 1024 * 1024;
-            URL url = new URL(params[0]);
+            URL url = new URL(taskParamTO.getUrl());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             // Allow Inputs &amp; Outputs.
@@ -56,10 +57,10 @@ public class URLMultipartTask<T> extends AsyncTask<String, String, URLTaskInfoBu
             outputStream.writeBytes("Content-Disposition: form-data; name=\"" + GALLERY_NAME_FORM_DATA_NAME + "\"" + LINE_END);
             outputStream.writeBytes("Content-Type: text/plain" + LINE_END);
             outputStream.writeBytes(LINE_END);
-            outputStream.writeBytes(params[1]);
+            outputStream.writeBytes(taskParamTO.getParams()[0]);
             outputStream.writeBytes(LINE_END);
 
-            for (int i = 2; i < params.length; i += 2) {
+            for (int i = 1; i < params.length; i += 2) {
 
                 // -- + boundary + CRLF
                 outputStream.writeBytes(twoHyphens + boundary + LINE_END);
@@ -70,7 +71,7 @@ public class URLMultipartTask<T> extends AsyncTask<String, String, URLTaskInfoBu
                 outputStream.writeBytes("Content-Type: application/octet-stream" + LINE_END);
                 outputStream.writeBytes(LINE_END);
 
-                fileInputStream = new FileInputStream(params[i]);
+                fileInputStream = new FileInputStream(taskParamTO.getParams()[i]);
                 bytesAvailable = fileInputStream.available();
                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
                 buffer = new byte[bufferSize];
@@ -97,10 +98,10 @@ public class URLMultipartTask<T> extends AsyncTask<String, String, URLTaskInfoBu
             outputStream.close();
 
             Log.e("URLMultipartTask Resp.", String.valueOf(connection.getResponseCode()));
-            return URLTaskInfoBundle.onSuccess(params, new byte[0], connection.getResponseCode());
+            return URLTaskInfoBundle.onSuccess(taskParamTO, new byte[0], connection.getResponseCode());
         } catch (Exception e) {
             Log.e("URLMultipartTask Error", e.toString());
-            return URLTaskInfoBundle.onFail(params, e);
+            return URLTaskInfoBundle.onFail(taskParamTO, e);
         }
     }
 

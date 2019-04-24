@@ -25,9 +25,11 @@ import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.ImageItemArrayAdapter;
+import cz.gattserver.android.common.LoginUtils;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLTaskInfoBundle;
+import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.interfaces.ImageItemTO;
 import cz.gattserver.android.lazyloader.LazyLoaderScrollListener;
 
@@ -77,7 +79,7 @@ public class PhotogalleryActivity extends GrassActivity {
         URLGetTask<PhotogalleryActivity> fetchTask = new URLGetTask<>(this, new PhotogalleryInitAction());
 
         // http://gattserver.cz/ws/pg/gallery?id=383
-        fetchTask.execute(Config.PG_DETAIL_RESOURCE + "?id=" + id);
+        fetchTask.execute(new URLTaskParamTO(Config.PG_DETAIL_RESOURCE + "?id=" + id, LoginUtils.getSessionid(this)));
 
         Log.d("PhotogalleryActivity", "The onCreate() event");
     }
@@ -87,7 +89,7 @@ public class PhotogalleryActivity extends GrassActivity {
             return;
         byte[] image = bundle.getResult();
         Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-        adapter.add(new ImageItemTO(bundle.getParams()[1], bundle.getParams()[2], bitmap));
+        adapter.add(new ImageItemTO(bundle.getTaskParamTO().getParams()[1], bundle.getTaskParamTO().getParams()[2], bitmap));
     }
 
     public void init(String result) {
@@ -114,8 +116,8 @@ public class PhotogalleryActivity extends GrassActivity {
                     Log.d("LazyLoaderCountTask", "currentSlideshow: " + currentSlideshow + ", totalCount: " + totalCount);
                     if (totalCount > currentSlideshow) {
                         URLGetTask<PhotogalleryActivity> fetchTask = new URLGetTask<>(PhotogalleryActivity.this, new PhotogalleryFetchMiniatureAction());
-                        // http://gattserver.cz/ws/pg/mini?id=383&fileName=31252889_10211544311583314_2288872652829360128_n.jpg
-                        fetchTask.execute(Config.PHOTO_SLIDESHOW_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(photoNames[currentSlideshow]), photoNames[currentSlideshow], id);
+                        fetchTask.execute(new URLTaskParamTO(Config.PHOTO_SLIDESHOW_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(photoNames[currentSlideshow]),
+                                LoginUtils.getSessionid(PhotogalleryActivity.this)));
                         currentSlideshow++;
                     }
                     if (totalCount <= currentSlideshow) {

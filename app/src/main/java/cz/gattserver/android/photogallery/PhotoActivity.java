@@ -15,10 +15,12 @@ import java.net.URLEncoder;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.LoginUtils;
 import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.OnSwipeTouchListener;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
+import cz.gattserver.android.common.URLTaskParamTO;
 
 public class PhotoActivity extends GrassActivity {
 
@@ -79,7 +81,7 @@ public class PhotoActivity extends GrassActivity {
         URLGetTask<PhotoActivity> fetchTask = new URLGetTask<>(this, new PhotoActivityInitAction());
 
         // http://localhost:8180/web/ws/pg/photo?id=364&fileName=shocked_kittens_cr.jpg
-        fetchTask.execute(Config.PHOTO_DETAIL_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(name));
+        fetchTask.execute(new URLTaskParamTO(Config.PHOTO_DETAIL_RESOURCE + "?id=" + id + "&fileName=" + URLEncoder.encode(name), LoginUtils.getSessionid(this)));
 
         Log.d("PhotoActivity", "The onCreate() event");
     }

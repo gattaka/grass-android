@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
+import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.interfaces.ItemTO;
 import cz.gattserver.android.lazyloader.LazyListActivity;
 
@@ -29,12 +30,12 @@ public class CampgamesActivity extends LazyListActivity<ItemTO> {
     }
 
     @Override
-    protected String createCountURL() {
-        return Config.CAMPGAMES_COUNT_RESOURCE;
+    protected URLTaskParamTO createCountTaskParamTO() {
+        return new URLTaskParamTO(Config.CAMPGAMES_COUNT_RESOURCE);
     }
 
     @Override
-    protected String createFetchURL(int pageSize, int page) {
-        return Config.CAMPGAMES_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page;
+    protected URLTaskParamTO createFetchTaskParamTO(int pageSize, int page) {
+        return new URLTaskParamTO(Config.CAMPGAMES_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page);
     }
 }

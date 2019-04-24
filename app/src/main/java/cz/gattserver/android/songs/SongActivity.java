@@ -12,9 +12,11 @@ import org.json.JSONObject;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.LoginUtils;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.common.OnSuccessAction;
+import cz.gattserver.android.common.URLTaskParamTO;
 
 public class SongActivity extends GrassActivity {
 
@@ -40,7 +42,7 @@ public class SongActivity extends GrassActivity {
         URLGetTask<SongActivity> fetchTask = new URLGetTask<>(this, new SongActivityInitAction());
 
         // http://www.gattserver.cz/ws/songs/song?id=4
-        fetchTask.execute(Config.SONG_DETAIL_RESOURCE + "?id=" + id);
+        fetchTask.execute(new URLTaskParamTO(Config.SONG_DETAIL_RESOURCE + "?id=" + id, LoginUtils.getSessionid(this)));
 
         Log.d(msg, "The onCreate() event");
     }

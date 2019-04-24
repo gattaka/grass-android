@@ -8,7 +8,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class URLGetTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
+public class URLGetTask<T> extends AsyncTask<URLTaskParamTO, Void, URLTaskInfoBundle> {
 
     protected WeakReference<T> urlTaskClientWeakReference;
     protected OnSuccessAction<T> onSuccessAction;
@@ -23,24 +23,24 @@ public class URLGetTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
     }
 
     @Override
-    protected URLTaskInfoBundle doInBackground(String... params) {
-        String address = params[0];
+    protected URLTaskInfoBundle doInBackground(URLTaskParamTO... params) {
+        URLTaskParamTO taskParamTO = params[0];
+        String address = taskParamTO.getUrl();
         try {
             Log.d("URLGetTask", "Trying... URL GET: " + address);
-            URL url = new URL(params[0]);
+            URL url = new URL(address);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            if (params.length > 1) {
-                String jsessionid = params[1];
-                connection.setRequestProperty("Cookie", "JSESSIONID=" + jsessionid);
+            if (taskParamTO.getSessionId() != null) {
+                connection.setRequestProperty("Cookie", "JSESSIONID=" + taskParamTO.getSessionId());
             }
             InputStream is = connection.getInputStream();
             byte[] bytes = ByteUtils.readBytes(is);
-            URLTaskInfoBundle bundle = URLTaskInfoBundle.onSuccess(params, bytes, connection.getResponseCode());
+            URLTaskInfoBundle bundle = URLTaskInfoBundle.onSuccess(taskParamTO, bytes, connection.getResponseCode());
             Log.d("URLGetTask", "Success! URL GET: " + address);
             return bundle;
         } catch (Exception ex) {
             Log.e("URLGetTask", "Failure. URL GET: " + address, ex);
-            return URLTaskInfoBundle.onFail(params, ex);
+            return URLTaskInfoBundle.onFail(taskParamTO, ex);
         }
     }
 

@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.URLTaskParamTO;
 
 public abstract class LazyListActivity<T> extends GrassActivity {
 
@@ -29,9 +30,9 @@ public abstract class LazyListActivity<T> extends GrassActivity {
 
     protected abstract void onItemClick(T item);
 
-    protected abstract String createFetchURL(int pageSize, int page);
+    protected abstract URLTaskParamTO createFetchTaskParamTO(int pageSize, int page);
 
-    protected abstract String createCountURL();
+    protected abstract URLTaskParamTO createCountTaskParamTO();
 
     public LazyListActivity(@LayoutRes int layoutResID, String title) {
         this.layoutResID = layoutResID;
@@ -60,7 +61,7 @@ public abstract class LazyListActivity<T> extends GrassActivity {
 
     protected void initLazyLoaderTask() {
         LazyLoaderCountTask<T> lazyLoaderTask = new LazyLoaderCountTask<>(this);
-        lazyLoaderTask.execute(createCountURL());
+        lazyLoaderTask.execute(createCountTaskParamTO());
     }
 
     protected void createComponents() {

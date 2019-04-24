@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import cz.gattserver.android.common.URLTaskParamTO;
+
 public abstract class FilteredLazyListActivity<T> extends LazyListActivity<T> {
 
     protected EditText filterText;
@@ -16,9 +18,9 @@ public abstract class FilteredLazyListActivity<T> extends LazyListActivity<T> {
 
     protected abstract ViewGroup getLayout();
 
-    protected abstract String createCountURL(String filter);
+    protected abstract URLTaskParamTO createCountTaskParamTO(String filter);
 
-    protected abstract String createFetchURL(String filter, int pageSize, int page);
+    protected abstract URLTaskParamTO createFetchTaskParamTO(String filter, int pageSize, int page);
 
     public FilteredLazyListActivity(@LayoutRes int layoutResID, String title) {
         super(layoutResID, title);
@@ -62,16 +64,16 @@ public abstract class FilteredLazyListActivity<T> extends LazyListActivity<T> {
     }
 
     @Override
-    protected String createCountURL() {
-        String url = createCountURL(getFilterText());
-        Log.d("F.LazyListActivity", "createCountURL(): " + url);
-        return url;
+    protected URLTaskParamTO createCountTaskParamTO() {
+        URLTaskParamTO taskParamTO = createCountTaskParamTO(getFilterText());
+        Log.d("F.LazyListActivity", "createCountTaskParamTO(): " + taskParamTO);
+        return taskParamTO;
     }
 
     @Override
-    protected String createFetchURL(int pageSize, int page) {
-        String url = createFetchURL(getFilterText(), pageSize, page);
-        Log.d("F.LazyListActivity", "createFetchURL(): " + url);
-        return url;
+    protected URLTaskParamTO createFetchTaskParamTO(int pageSize, int page) {
+        URLTaskParamTO taskParamTO = createFetchTaskParamTO(getFilterText(), pageSize, page);
+        Log.d("F.LazyListActivity", "createFetchTaskParamTO(): " + taskParamTO);
+        return taskParamTO;
     }
 }

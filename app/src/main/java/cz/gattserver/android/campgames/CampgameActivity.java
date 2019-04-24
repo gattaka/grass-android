@@ -14,6 +14,7 @@ import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.common.OnSuccessAction;
+import cz.gattserver.android.common.URLTaskParamTO;
 
 public class CampgameActivity extends GrassActivity {
 
@@ -35,7 +36,7 @@ public class CampgameActivity extends GrassActivity {
         });
 
         // http://www.gattserver.cz/ws/campgames/campgame?id=4
-        fetchTask.execute(Config.CAMPGAMES_DETAIL_RESOURCE + "?id=" + id);
+        fetchTask.execute(new URLTaskParamTO(Config.CAMPGAMES_DETAIL_RESOURCE + "?id=" + id));
 
         Log.d("CampgameActivity", "The onCreate() event");
     }

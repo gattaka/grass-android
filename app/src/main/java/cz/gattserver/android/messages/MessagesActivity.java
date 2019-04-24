@@ -25,9 +25,11 @@ import java.util.Map;
 import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.LoginUtils;
 import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLPostTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
+import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.interfaces.MessageTO;
 
 public class MessagesActivity extends GrassActivity {
@@ -119,7 +121,7 @@ public class MessagesActivity extends GrassActivity {
                                         sb.append(m.getBody());
                                         sb.append("\n\n");
                                     }
-                                    uploadTask.execute(Config.ARTICLES_CREATE, "text", sb.toString());
+                                    uploadTask.execute(new URLTaskParamTO(Config.ARTICLES_CREATE, LoginUtils.getSessionid(MessagesActivity.this)).setParams("text", sb.toString()));
                                     constructTable();
                                 }
                             })

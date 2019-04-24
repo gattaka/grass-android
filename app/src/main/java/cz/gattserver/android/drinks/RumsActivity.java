@@ -10,6 +10,7 @@ import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.RateItemArrayAdapter;
+import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.interfaces.RatedItemTO;
 import cz.gattserver.android.lazyloader.LazyListActivity;
 
@@ -37,12 +38,12 @@ public class RumsActivity extends LazyListActivity<RatedItemTO> {
     }
 
     @Override
-    protected String createCountURL() {
-        return Config.DRINKS_RUM_COUNT_RESOURCE;
+    protected URLTaskParamTO createCountTaskParamTO() {
+        return new URLTaskParamTO(Config.DRINKS_RUM_COUNT_RESOURCE);
     }
 
     @Override
-    protected String createFetchURL(int pageSize, int page) {
-        return Config.DRINKS_RUM_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page;
+    protected URLTaskParamTO createFetchTaskParamTO(int pageSize, int page) {
+        return new URLTaskParamTO(Config.DRINKS_RUM_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page);
     }
 }

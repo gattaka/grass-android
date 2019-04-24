@@ -2,6 +2,7 @@ package cz.gattserver.android.photogallery;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.View;
@@ -16,14 +17,16 @@ import java.util.List;
 import java.util.Map;
 
 import cz.gattserver.android.Config;
+import cz.gattserver.android.common.LoginUtils;
 import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLMultipartTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
+import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.interfaces.PhotoTO;
 
 class PhotosUploadButtonFactory {
 
-    public static <T extends Context> void setUploadButtonListener(Button sendBtn, final T context, final Map<Integer, PhotoTO> choosenPhotos) {
+    public static <T extends ContextWrapper> void setUploadButtonListener(Button sendBtn, final T context, final Map<Integer, PhotoTO> choosenPhotos) {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +59,6 @@ class PhotosUploadButtonFactory {
                                         });
                                 SimpleDateFormat sdf = new SimpleDateFormat("d_M_yyyy_HH_mm");
                                 List<String> params = new ArrayList<>();
-                                params.add(Config.PG_CREATE_FAST);
                                 params.add("PG_import_" + sdf.format(new Date()));
                                 for (PhotoTO p : choosenPhotos.values()) {
                                     params.add(p.getData());
@@ -64,7 +66,7 @@ class PhotosUploadButtonFactory {
                                 }
                                 String[] arrParams = new String[params.size()];
                                 arrParams = params.toArray(arrParams);
-                                uploadTask.execute(arrParams);
+                                uploadTask.execute(new URLTaskParamTO(Config.PG_CREATE_FAST, LoginUtils.getSessionid(context)).setParams(arrParams));
                             }
                         }).setNegativeButton(android.R.string.no, null).show();
             }
@@ -73,7 +75,7 @@ class PhotosUploadButtonFactory {
         sendBtn.setEnabled(false);
     }
 
-    public static <T extends Context> Button createUploadButton(final T context, final Map<Integer, PhotoTO> choosenPhotos) {
+    public static <T extends ContextWrapper> Button createUploadButton(final T context, final Map<Integer, PhotoTO> choosenPhotos) {
         Button sendBtn = new Button(context);
         setUploadButtonListener(sendBtn, context, choosenPhotos);
         return sendBtn;

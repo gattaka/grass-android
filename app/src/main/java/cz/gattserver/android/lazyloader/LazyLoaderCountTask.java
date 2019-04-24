@@ -55,7 +55,7 @@ public class LazyLoaderCountTask<T> extends URLGetTask<LazyListActivity<T>> {
                 Log.d("L.LoaderScrollListener", "currentPage: " + currentPage + ", totalCount: " + totalCount);
                 if (totalCount > currentPage * PAGE_SIZE) {
                     LazyLoaderFetchTask<T> fetchTask = new LazyLoaderFetchTask<>(instance);
-                    fetchTask.execute(instance.createFetchURL(PAGE_SIZE, currentPage));
+                    fetchTask.execute(instance.createFetchTaskParamTO(PAGE_SIZE, currentPage));
                     currentPage++;
                 }
                 if (totalCount <= currentPage * PAGE_SIZE) {

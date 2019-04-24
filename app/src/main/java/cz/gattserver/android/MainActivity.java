@@ -1,7 +1,6 @@
 package cz.gattserver.android;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,9 +15,11 @@ import cz.gattserver.android.books.BooksActivity;
 import cz.gattserver.android.campgames.CampgamesActivity;
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.LoginUtils;
 import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
+import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.drinks.DrinksActivity;
 import cz.gattserver.android.messages.MessagesActivity;
 import cz.gattserver.android.photogallery.PhotoMenuActivity;
@@ -118,9 +119,7 @@ public class MainActivity extends GrassActivity {
         final LinearLayout loginLayout = findViewById(R.id.loginLayout);
         loginLayout.removeAllViews();
 
-        SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-        final String sessionid = settings.getString(LoginActivity.VAR_NAME, null);
-
+        final String sessionid = LoginUtils.getSessionid(MainActivity.this);
         if (sessionid == null || sessionid.isEmpty()) {
             createLoginBtn();
         } else {
@@ -145,13 +144,13 @@ public class MainActivity extends GrassActivity {
                                         createLoginComponents();
                                 }
                             });
-                            logoutTask.execute(Config.LOGGED, sessionid);
+                            logoutTask.execute(new URLTaskParamTO(Config.LOGGED, sessionid));
                         }
                     });
                     loginLayout.addView(btn);
                 }
             });
-            loggedInTask.execute(Config.LOGGED, sessionid);
+            loggedInTask.execute(new URLTaskParamTO(Config.LOGGED, sessionid));
         }
     }
 

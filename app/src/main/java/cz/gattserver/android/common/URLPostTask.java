@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class URLPostTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
+public class URLPostTask<T> extends AsyncTask<URLTaskParamTO, Void, URLTaskInfoBundle> {
 
     private static final String LINE_END = "\r\n";
 
@@ -22,27 +22,31 @@ public class URLPostTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
     }
 
     @Override
-    protected URLTaskInfoBundle doInBackground(String... params) {
+    protected URLTaskInfoBundle doInBackground(URLTaskParamTO... params) {
+        URLTaskParamTO taskParamTO = params[0];
         try {
-            URL url = new URL(params[0]);
+
+            URL url = new URL(taskParamTO.getUrl());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
             connection.setRequestProperty("Accept", "*/*");
+            if (taskParamTO.getSessionId() != null)
+                connection.setRequestProperty("Cookie", "JSESSIONID=" + taskParamTO.getSessionId());
             connection.setDoOutput(true);
             connection.setDoInput(true);
 
-            if (params.length > 1) {
-                if ((params.length - 1) % 2 != 0)
+            if (taskParamTO.getParams().length > 0) {
+                if (taskParamTO.getParams().length % 2 != 0)
                     throw new IllegalArgumentException("Po prvním parametru (adresa) musí následovat dvojice argumentů name:value");
 
                 DataOutputStream outputStream;
                 outputStream = new DataOutputStream(connection.getOutputStream());
 
-                for (int s = 1; s < params.length; s += 2) {
-                    outputStream.writeBytes(params[s] + "=" + params[s + 1]);
-                    if (s == params.length - 1) {
+                for (int s = 0; s < taskParamTO.getParams().length; s += 2) {
+                    outputStream.writeBytes(taskParamTO.getParams()[s] + "=" + taskParamTO.getParams()[s + 1]);
+                    if (s == taskParamTO.getParams().length - 1) {
                         outputStream.writeBytes(LINE_END);
                     } else {
                         outputStream.writeBytes("&");
@@ -57,10 +61,10 @@ public class URLPostTask<T> extends AsyncTask<String, Void, URLTaskInfoBundle> {
             byte[] bytes = ByteUtils.readBytes(is);
 
             Log.e("URLPostTask", "ResponseCode: " + connection.getResponseCode());
-            return URLTaskInfoBundle.onSuccess(params, bytes, connection.getResponseCode());
+            return URLTaskInfoBundle.onSuccess(taskParamTO, bytes, connection.getResponseCode());
         } catch (Exception e) {
             Log.e("URLPostTask Error", e.toString());
-            return URLTaskInfoBundle.onFail(params, e);
+            return URLTaskInfoBundle.onFail(taskParamTO, e);
         }
     }
 

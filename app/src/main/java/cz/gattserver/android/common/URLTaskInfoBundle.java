@@ -4,22 +4,22 @@ import java.io.UnsupportedEncodingException;
 
 public class URLTaskInfoBundle {
 
-    private String[] params;
+    private URLTaskParamTO taskParamTO;
     private byte[] result;
     private boolean success;
     private Throwable error;
     private Integer responseCode;
 
-    public static URLTaskInfoBundle onFail(String[] params, Throwable error) {
-        return new URLTaskInfoBundle(params, null, false, error, null);
+    public static URLTaskInfoBundle onFail(URLTaskParamTO taskParamTO, Throwable error) {
+        return new URLTaskInfoBundle(taskParamTO, null, false, error, null);
     }
 
-    public static URLTaskInfoBundle onSuccess(String[] params, byte[] result, int responseCode) {
-        return new URLTaskInfoBundle(params, result, true, null, responseCode);
+    public static URLTaskInfoBundle onSuccess(URLTaskParamTO taskParamTO, byte[] result, int responseCode) {
+        return new URLTaskInfoBundle(taskParamTO, result, true, null, responseCode);
     }
 
-    private URLTaskInfoBundle(String[] params, byte[] result, boolean success, Throwable error, Integer responseCode) {
-        this.params = params;
+    private URLTaskInfoBundle(URLTaskParamTO taskParamTO, byte[] result, boolean success, Throwable error, Integer responseCode) {
+        this.taskParamTO = taskParamTO;
         this.result = result;
         this.success = success;
         this.error = error;
@@ -38,8 +38,8 @@ public class URLTaskInfoBundle {
         return responseCode;
     }
 
-    public String[] getParams() {
-        return params;
+    public URLTaskParamTO getTaskParamTO() {
+        return taskParamTO;
     }
 
     public byte[] getResult() {

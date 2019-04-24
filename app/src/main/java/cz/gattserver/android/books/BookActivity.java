@@ -19,6 +19,7 @@ import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.common.OnSuccessAction;
+import cz.gattserver.android.common.URLTaskParamTO;
 
 public class BookActivity extends GrassActivity {
 
@@ -39,7 +40,7 @@ public class BookActivity extends GrassActivity {
             }
         });
 
-        fetchTask.execute(Config.BOOK_DETAIL_RESOURCE + "?id=" + id);
+        fetchTask.execute(new URLTaskParamTO(Config.BOOK_DETAIL_RESOURCE + "?id=" + id));
 
         Log.d("BookActivity", "The onCreate() event");
     }
