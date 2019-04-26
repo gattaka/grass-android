@@ -141,8 +141,10 @@ public class MainActivity extends GrassActivity {
                             URLPostTask<MainActivity> logoutTask = new URLPostTask<>(MainActivity.this, new OnSuccessAction<MainActivity>() {
                                 @Override
                                 public void run(MainActivity urlTaskClient, URLTaskInfoBundle bundle) {
-                                    if (bundle.isSuccess() && bundle.getResponseCode() == 200)
+                                    if (bundle.isSuccess() && bundle.getResponseCode() == 200) {
+                                        LoginUtils.saveSessionId(MainActivity.this, null);
                                         createLoginComponents();
+                                    }
                                 }
                             });
                             logoutTask.execute(new URLTaskParamTO(Config.LOGOUT, sessionid));

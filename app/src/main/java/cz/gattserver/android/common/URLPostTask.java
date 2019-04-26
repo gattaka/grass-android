@@ -55,12 +55,17 @@ public class URLPostTask<T> extends AsyncTask<URLTaskParamTO, Void, URLTaskInfoB
                 outputStream.flush();
                 outputStream.close();
             }
+            int responseCode = connection.getResponseCode();
+            Log.e("URLPostTask", "ResponseCode: " + responseCode);
 
-            InputStream is = connection.getInputStream();
-            byte[] bytes = ByteUtils.readBytes(is);
+            if (responseCode == 200) {
+                InputStream is = connection.getInputStream();
+                byte[] bytes = ByteUtils.readBytes(is);
+                return URLTaskInfoBundle.onSuccess(taskParamTO, bytes, responseCode);
+            }
 
-            Log.e("URLPostTask", "ResponseCode: " + connection.getResponseCode());
-            return URLTaskInfoBundle.onSuccess(taskParamTO, bytes, connection.getResponseCode());
+            URLTaskInfoBundle bundle = URLTaskInfoBundle.onSuccess(taskParamTO, new byte[]{}, responseCode);
+            return bundle;
         } catch (Exception e) {
             Log.e("URLPostTask Error", e.toString());
             return URLTaskInfoBundle.onFail(taskParamTO, e);
