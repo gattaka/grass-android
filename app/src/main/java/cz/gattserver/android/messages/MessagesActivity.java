@@ -15,6 +15,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +59,7 @@ public class MessagesActivity extends GrassActivity {
                 if (cursor != null && cursor.moveToFirst()) {
                     do {
                         String id = cursor.getString(cursor.getColumnIndex("_id"));
+                        // UTF-8
                         String body = cursor.getString(cursor.getColumnIndex("body"));
                         String date = cursor.getString(cursor.getColumnIndex("date"));
                         String number = cursor.getString(cursor.getColumnIndex("service_center"));

@@ -45,10 +45,9 @@ public class URLPostTask<T> extends AsyncTask<URLTaskParamTO, Void, URLTaskInfoB
                 outputStream = new DataOutputStream(connection.getOutputStream());
 
                 for (int s = 0; s < taskParamTO.getParams().length; s += 2) {
-                    outputStream.writeBytes(taskParamTO.getParams()[s] + "=" + taskParamTO.getParams()[s + 1]);
-                    if (s == taskParamTO.getParams().length - 1) {
-                        outputStream.writeBytes(LINE_END);
-                    } else {
+                    outputStream.writeBytes(taskParamTO.getParams()[s] + "=");
+                    outputStream.write(taskParamTO.getParams()[s + 1].getBytes("UTF-8"));
+                    if (s < taskParamTO.getParams().length - 2) {
                         outputStream.writeBytes("&");
                     }
                 }

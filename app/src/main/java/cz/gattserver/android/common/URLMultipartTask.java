@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class URLMultipartTask<T> extends AsyncTask< URLTaskParamTO, String, URLTaskInfoBundle> {
+public class URLMultipartTask<T> extends AsyncTask<URLTaskParamTO, String, URLTaskInfoBundle> {
 
     private static final String FILES_FORM_DATA_NAME = "files";
     private static final String GALLERY_NAME_FORM_DATA_NAME = "galleryName";

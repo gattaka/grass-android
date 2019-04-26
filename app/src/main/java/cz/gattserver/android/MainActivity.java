@@ -18,6 +18,7 @@ import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.LoginUtils;
 import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLGetTask;
+import cz.gattserver.android.common.URLPostTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.drinks.DrinksActivity;
@@ -137,14 +138,14 @@ public class MainActivity extends GrassActivity {
                     btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            URLGetTask<MainActivity> logoutTask = new URLGetTask<>(MainActivity.this, new OnSuccessAction<MainActivity>() {
+                            URLPostTask<MainActivity> logoutTask = new URLPostTask<>(MainActivity.this, new OnSuccessAction<MainActivity>() {
                                 @Override
                                 public void run(MainActivity urlTaskClient, URLTaskInfoBundle bundle) {
                                     if (bundle.isSuccess() && bundle.getResponseCode() == 200)
                                         createLoginComponents();
                                 }
                             });
-                            logoutTask.execute(new URLTaskParamTO(Config.LOGGED, sessionid));
+                            logoutTask.execute(new URLTaskParamTO(Config.LOGOUT, sessionid));
                         }
                     });
                     loginLayout.addView(btn);

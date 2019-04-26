@@ -2,11 +2,12 @@ package cz.gattserver.android;
 
 public class Config {
 
-    public static final String SERVER_ROOT = "https://www.gattserver.cz";
-    //public static final String SERVER_ROOT = "http://10.0.2.2:8180/web";
+    //public static final String SERVER_ROOT = "https://www.gattserver.cz";
+    public static final String SERVER_ROOT = "http://10.0.2.2:8180/web";
 
     public static final String CORE_ROOT = SERVER_ROOT + "/ws/core";
     public static final String LOGGED = CORE_ROOT + "/logged";
+    public static final String LOGOUT = CORE_ROOT + "/logout";
     public static final String LOGIN = CORE_ROOT + "/login";
 
     public static final String ARTICLES_ROOT = SERVER_ROOT + "/ws/articles";
