@@ -5,6 +5,7 @@ public class URLTaskParamTO {
     private String url;
     private String sessionId;
     private String[] params;
+    private String[] fileParams;
 
     public URLTaskParamTO(String url) {
         this(url, null);
@@ -40,6 +41,15 @@ public class URLTaskParamTO {
 
     public URLTaskParamTO setParams(String... params) {
         this.params = params;
+        return this;
+    }
+
+    public String[] getFileParams() {
+        return fileParams;
+    }
+
+    public URLTaskParamTO setFileParams(String... fileParams) {
+        this.fileParams = fileParams;
         return this;
     }
 }

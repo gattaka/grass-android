@@ -12,7 +12,6 @@ import java.net.URL;
 public class URLMultipartTask<T> extends AsyncTask<URLTaskParamTO, String, URLTaskInfoBundle> {
 
     private static final String FILES_FORM_DATA_NAME = "files";
-    private static final String GALLERY_NAME_FORM_DATA_NAME = "galleryName";
     private static final String LINE_END = "\r\n";
 
     protected WeakReference<T> urlMultipartTaskClientWeakReference;
@@ -28,7 +27,6 @@ public class URLMultipartTask<T> extends AsyncTask<URLTaskParamTO, String, URLTa
         URLTaskParamTO taskParamTO = params[0];
         Log.e("URLMultipartTask", "doInBackground");
         try {
-            int serverResponseCode = 0;
             String twoHyphens = "--";
             String boundary = Long.toString(System.currentTimeMillis(), 16);
 
@@ -38,40 +36,43 @@ public class URLMultipartTask<T> extends AsyncTask<URLTaskParamTO, String, URLTa
             URL url = new URL(taskParamTO.getUrl());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            // Allow Inputs &amp; Outputs.
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setUseCaches(false);
-
-            // Set HTTP method to POST.
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
 
+            if (taskParamTO.getSessionId() != null)
+                connection.setRequestProperty("Cookie", "JSESSIONID=" + taskParamTO.getSessionId());
+
             DataOutputStream outputStream;
             outputStream = new DataOutputStream(connection.getOutputStream());
 
-            // -- + boundary + CRLF
-            outputStream.writeBytes(twoHyphens + boundary + LINE_END);
+            for (int i = 0; i < taskParamTO.getParams().length; i += 2) {
 
-            outputStream.writeBytes("Content-Disposition: form-data; name=\"" + GALLERY_NAME_FORM_DATA_NAME + "\"" + LINE_END);
-            outputStream.writeBytes("Content-Type: text/plain" + LINE_END);
-            outputStream.writeBytes(LINE_END);
-            outputStream.writeBytes(taskParamTO.getParams()[0]);
-            outputStream.writeBytes(LINE_END);
+                // -- + boundary + CRLF
+                outputStream.writeBytes(twoHyphens + boundary + LINE_END);
 
-            for (int i = 1; i < taskParamTO.getParams().length; i += 2) {
+                outputStream.writeBytes("Content-Disposition: form-data; name=\"" + taskParamTO.getParams()[i] + "\"" + LINE_END);
+                outputStream.writeBytes("Content-Type: text/plain" + LINE_END);
+                outputStream.writeBytes(LINE_END);
+                outputStream.writeBytes(taskParamTO.getParams()[i + 1]);
+                outputStream.writeBytes(LINE_END);
+            }
+
+            for (int i = 0; i < taskParamTO.getFileParams().length; i += 2) {
 
                 // -- + boundary + CRLF
                 outputStream.writeBytes(twoHyphens + boundary + LINE_END);
 
                 FileInputStream fileInputStream;
 
-                outputStream.writeBytes("Content-Disposition: form-data; name=\"" + FILES_FORM_DATA_NAME + "\"; filename=\"" + taskParamTO.getParams()[i + 1] + "\"" + LINE_END);
+                outputStream.writeBytes("Content-Disposition: form-data; name=\"" + FILES_FORM_DATA_NAME + "\"; filename=\"" + taskParamTO.getFileParams()[i + 1] + "\"" + LINE_END);
                 outputStream.writeBytes("Content-Type: application/octet-stream" + LINE_END);
                 outputStream.writeBytes(LINE_END);
 
-                fileInputStream = new FileInputStream(taskParamTO.getParams()[i]);
+                fileInputStream = new FileInputStream(taskParamTO.getFileParams()[i]);
                 bytesAvailable = fileInputStream.available();
                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
                 buffer = new byte[bufferSize];

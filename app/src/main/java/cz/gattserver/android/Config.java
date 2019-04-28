@@ -2,8 +2,8 @@ package cz.gattserver.android;
 
 public class Config {
 
-    //public static final String SERVER_ROOT = "https://www.gattserver.cz";
-    public static final String SERVER_ROOT = "http://10.0.2.2:8180/web";
+    public static final String SERVER_ROOT = "https://www.gattserver.cz";
+    //public static final String SERVER_ROOT = "http://10.0.2.2:8180/web";
 
     public static final String CORE_ROOT = SERVER_ROOT + "/ws/core";
     public static final String LOGGED = CORE_ROOT + "/logged";
@@ -14,14 +14,12 @@ public class Config {
     public static final String ARTICLES_CREATE = ARTICLES_ROOT + "/create";
 
     public static final String PG_ROOT = SERVER_ROOT + "/ws/pg";
-    public static final String PG_CREATE_FAST = PG_ROOT + "/createfast";
     public static final String PG_CREATE = PG_ROOT + "/create";
     public static final String PG_UPLOAD = PG_ROOT + "/upload";
     public static final String PG_PROCESS = PG_ROOT + "/process";
     public static final String PG_LIST_RESOURCE = PG_ROOT + "/list";
     public static final String PG_COUNT_RESOURCE = PG_ROOT + "/count";
     public static final String PG_DETAIL_RESOURCE = PG_ROOT + "/gallery";
-    public static final String PHOTO_MINIATURE_RESOURCE = PG_ROOT + "/mini";
     public static final String PHOTO_SLIDESHOW_RESOURCE = PG_ROOT + "/slideshow";
     public static final String PHOTO_DETAIL_RESOURCE = PG_ROOT + "/photo";
 
