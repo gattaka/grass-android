@@ -1,4 +1,4 @@
-package cz.gattserver.android.messages;
+package cz.gattserver.android.articles;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,8 +15,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

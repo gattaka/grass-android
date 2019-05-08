@@ -2,8 +2,8 @@ package cz.gattserver.android;
 
 public class Config {
 
-    public static final String SERVER_ROOT = "https://www.gattserver.cz";
-    //public static final String SERVER_ROOT = "http://10.0.2.2:8180/web";
+    //public static final String SERVER_ROOT = "https://www.gattserver.cz";
+    public static final String SERVER_ROOT = "http://10.0.2.2:8180/web";
 
     public static final String CORE_ROOT = SERVER_ROOT + "/ws/core";
     public static final String LOGGED = CORE_ROOT + "/logged";
@@ -12,6 +12,9 @@ public class Config {
 
     public static final String ARTICLES_ROOT = SERVER_ROOT + "/ws/articles";
     public static final String ARTICLES_CREATE = ARTICLES_ROOT + "/create";
+    public static final String ARTICLES_LIST_RESOURCE = ARTICLES_ROOT + "/list";
+    public static final String ARTICLES_COUNT_RESOURCE = ARTICLES_ROOT + "/count";
+    public static final String ARTICLES_DETAIL_RESOURCE = ARTICLES_ROOT + "/article";
 
     public static final String PG_ROOT = SERVER_ROOT + "/ws/pg";
     public static final String PG_CREATE = PG_ROOT + "/create";

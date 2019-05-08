@@ -1,4 +1,4 @@
-package cz.gattserver.android.photogallery;
+package cz.gattserver.android.articles;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,33 +13,34 @@ import java.util.List;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.ButtonDefinition;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.photogallery.PhonePhotosListActivity;
 
-public class PhotoMenuActivity extends GrassActivity {
+public class ArticlesMenuActivity extends GrassActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photomenu);
+        setContentView(R.layout.activity_articles_menu);
 
-        setTitle("Fotky");
+        setTitle("Články");
 
         List<ButtonDefinition> buttonDefinitions = new ArrayList<>();
-        buttonDefinitions.add(new ButtonDefinition("Fotogalerie", new View.OnClickListener() {
+        buttonDefinitions.add(new ButtonDefinition("Články", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PhotoMenuActivity.this, PhotogalleriesActivity.class);
+                Intent intent = new Intent(ArticlesMenuActivity.this, ArticlesActivity.class);
                 startActivity(intent);
             }
         }));
-        buttonDefinitions.add(new ButtonDefinition("Upload fotek", new View.OnClickListener() {
+        buttonDefinitions.add(new ButtonDefinition("Upload SMS", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PhotoMenuActivity.this, PhonePhotosListActivity.class);
+                Intent intent = new Intent(ArticlesMenuActivity.this, MessagesActivity.class);
                 startActivity(intent);
             }
         }));
 
-        LinearLayout mainLayout = findViewById(R.id.photomenuLayout);
+        LinearLayout mainLayout = findViewById(R.id.articlesMenuLayout);
         for (ButtonDefinition bdef : buttonDefinitions) {
             Button btn = new Button(this);
             btn.setText(bdef.getCaption());

@@ -11,6 +11,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.gattserver.android.articles.ArticleActivity;
+import cz.gattserver.android.articles.ArticlesActivity;
 import cz.gattserver.android.books.BooksActivity;
 import cz.gattserver.android.campgames.CampgamesActivity;
 import cz.gattserver.android.common.ButtonDefinition;
@@ -22,7 +24,7 @@ import cz.gattserver.android.common.URLPostTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.drinks.DrinksActivity;
-import cz.gattserver.android.messages.MessagesActivity;
+import cz.gattserver.android.articles.MessagesActivity;
 import cz.gattserver.android.photogallery.PhotoMenuActivity;
 import cz.gattserver.android.recipes.RecipesActivity;
 import cz.gattserver.android.songs.SongsActivity;
@@ -41,6 +43,13 @@ public class MainActivity extends GrassActivity {
 
         createLoginComponents();
 
+        buttonDefinitions.add(new ButtonDefinition("Články", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ArticlesActivity.class);
+                startActivity(intent);
+            }
+        }));
         buttonDefinitions.add(new ButtonDefinition("Fotky", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,13 +89,6 @@ public class MainActivity extends GrassActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BooksActivity.class);
-                startActivity(intent);
-            }
-        }));
-        buttonDefinitions.add(new ButtonDefinition("Zprávy", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MessagesActivity.class);
                 startActivity(intent);
             }
         }));

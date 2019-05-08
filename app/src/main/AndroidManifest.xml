@@ -39,9 +39,12 @@
         <activity android:name=".photogallery.PhotogalleryActivity" />
         <activity android:name=".photogallery.PhotoActivity" />
         <activity android:name=".photogallery.PhonePhotosListActivity" />
-        <activity android:name=".messages.MessagesActivity" />
         <activity android:name=".books.BooksActivity" />
         <activity android:name=".books.BookActivity" />
+        <activity android:name=".articles.ArticlesMenuActivity" />
+        <activity android:name=".articles.ArticlesActivity" />
+        <activity android:name=".articles.ArticleActivity" />
+        <activity android:name=".articles.MessagesActivity" />
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_login"></activity>
