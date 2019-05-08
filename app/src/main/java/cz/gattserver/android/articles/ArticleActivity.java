@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,14 +42,40 @@ public class ArticleActivity extends GrassActivity {
                     if (bundle.getResponseCode() == 200) {
                         try {
                             JSONObject jsonObject = new JSONObject(bundle.getResultAsStringUTF());
-                            String outputHTML = jsonObject.getString("outputHTML");
+                            String contentHTML = jsonObject.getString("outputHTML");
+
+                            String outputHTML = "<!DOCTYPE html>\n" +
+                                    "<html>\n" +
+                                    " <head>\n" +
+                                    "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" +
+                                    "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=11\" />\n" +
+                                    "  <title>Gattserver</title>\n" +
+                                    "  <style type=\"text/css\">";
+
+                            outputHTML += ".articles-h1:     font-size: 15pt;\n" +
+                                    "    margin-bottom: 10px !important;\n" +
+                                    "    border-bottom: 1px #BBB solid";
+
+                            // TODO
+                            JSONArray pluginCSSResources = jsonObject.getJSONArray("pluginCSSResources");
+
+                            outputHTML += "</style>\n";
+
+                            // TODO
+                            JSONArray pluginJSResources = jsonObject.getJSONArray("pluginJSResources");
+
+                            outputHTML += " </head>\n" +
+                                    " <body scroll=\"auto\" class=\" v-generated-body\">";
+                            outputHTML += contentHTML;
+                            outputHTML += "</body>\n" +
+                                    "</html>";
 
                             WebView webView = new WebView(instance);
 
                             String encodedHTML = Base64.encodeToString(outputHTML.getBytes(),
                                     Base64.NO_PADDING);
                             webView.loadData(encodedHTML, "text/html; charset=UTF-8", "base64");
-
+                            WebSettings webSettings = webView.getSettings();
                             mainLayout.addView(webView);
                         } catch (JSONException e) {
                             Log.e("ArticleActivity", "JSONObject", e);
