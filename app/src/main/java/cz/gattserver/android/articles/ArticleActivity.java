@@ -83,7 +83,7 @@ public class ArticleActivity extends GrassActivity {
                                     "\t}\n" +
                                     "\t\n" +
                                     "\t.barier, .numberedtext, .code {\n" +
-                                    "\t\twidth: fit-content;\n" +
+                                    "\t\twidth: max-content;\n" +
                                     "\t}\t";
 
                             // TODO

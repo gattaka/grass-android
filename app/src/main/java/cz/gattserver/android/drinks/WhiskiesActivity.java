@@ -1,6 +1,7 @@
 package cz.gattserver.android.drinks;
 
 import android.content.Intent;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import org.json.JSONException;
@@ -12,9 +13,9 @@ import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.RateItemArrayAdapter;
 import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.interfaces.RatedItemTO;
-import cz.gattserver.android.lazyloader.LazyListActivity;
+import cz.gattserver.android.lazyloader.FilteredLazyListActivity;
 
-public class WhiskiesActivity extends LazyListActivity<RatedItemTO> {
+public class WhiskiesActivity extends FilteredLazyListActivity<RatedItemTO> {
 
     public WhiskiesActivity() {
         super(R.layout.activity_whiskies, "Whiskey");
@@ -38,12 +39,18 @@ public class WhiskiesActivity extends LazyListActivity<RatedItemTO> {
     }
 
     @Override
-    protected URLTaskParamTO createCountTaskParamTO() {
-        return new URLTaskParamTO(Config.DRINKS_WHISKEY_COUNT_RESOURCE);
+    protected ViewGroup getLayout() {
+        return findViewById(R.id.whiskiesLayout);
     }
 
     @Override
-    protected URLTaskParamTO createFetchTaskParamTO(int pageSize, int page) {
-        return new URLTaskParamTO(Config.DRINKS_WHISKEY_LIST_RESOURCE + "?pageSize=" + pageSize + "&page=" + page);
+    protected URLTaskParamTO createCountTaskParamTO(String filter) {
+        return new URLTaskParamTO(Config.DRINKS_WHISKEY_COUNT_RESOURCE + "?filter=" + filter);
     }
+
+    @Override
+    protected URLTaskParamTO createFetchTaskParamTO(String filter, int pageSize, int page) {
+        return new URLTaskParamTO(Config.DRINKS_WHISKEY_LIST_RESOURCE + "?filter=" + filter + "&pageSize=" + pageSize + "&page=" + page);
+    }
+
 }
