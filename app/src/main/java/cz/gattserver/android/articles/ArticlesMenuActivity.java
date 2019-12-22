@@ -32,6 +32,13 @@ public class ArticlesMenuActivity extends GrassActivity {
                 startActivity(intent);
             }
         }));
+        buttonDefinitions.add(new ButtonDefinition("Poznámky", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ArticlesMenuActivity.this, NotesActivity.class);
+                startActivity(intent);
+            }
+        }));
         buttonDefinitions.add(new ButtonDefinition("Upload SMS", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

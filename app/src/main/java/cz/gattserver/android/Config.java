@@ -60,4 +60,6 @@ public class Config {
     public static final String DRINKS_WINE_COUNT_RESOURCE = DRINKS_ROOT + "/wine-count";
     public static final String DRINKS_WINE_DETAIL_RESOURCE = DRINKS_ROOT + "/wine";
 
+    public static final String NOTES_DIR = "notes";
+
 }

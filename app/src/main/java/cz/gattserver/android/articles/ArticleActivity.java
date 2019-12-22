@@ -132,7 +132,5 @@ public class ArticleActivity extends GrassActivity {
         });
 
         task.execute(new URLTaskParamTO(Config.ARTICLES_DETAIL_RESOURCE + "?id=" + id));
-
-        Log.d("DrinksActivity", "The onCreate() event");
     }
 }
