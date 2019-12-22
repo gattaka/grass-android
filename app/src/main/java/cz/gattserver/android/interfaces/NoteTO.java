@@ -22,6 +22,12 @@ public class NoteTO {
         return text;
     }
 
+    public String getPreview() {
+        if (!text.contains("\n"))
+            return text;
+        return text.substring(0, text.indexOf('\n'));
+    }
+
     public Date getDate() {
         return date;
     }

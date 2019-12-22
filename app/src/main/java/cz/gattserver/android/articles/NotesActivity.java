@@ -69,7 +69,7 @@ public class NotesActivity extends GrassActivity {
         });
         tableLayout.addView(newNoteButton);
 
-        File directory = getDir(Config.NOTES_DIR, MODE_PRIVATE);
+        final File directory = getDir(Config.NOTES_DIR, MODE_PRIVATE);
         File[] files = directory.listFiles();
 
         if (files.length == 0) {
@@ -83,12 +83,13 @@ public class NotesActivity extends GrassActivity {
             row.addView(bodyTextView);
         } else {
             List<NoteTO> notes = new ArrayList<>();
-            for (final File note : files) {
-                String id = note.getName();
+            for (int i = files.length - 1; i >= 0; i--) {
+                File noteFile = files[i];
+                String id = noteFile.getName();
                 String text = null;
-                Date date = new Date(Long.valueOf(note.getName()));
+                Date date = new Date(Long.valueOf(noteFile.getName()));
                 try {
-                    BufferedReader br = new BufferedReader(new FileReader(note));
+                    BufferedReader br = new BufferedReader(new FileReader(noteFile));
                     StringBuilder sb = new StringBuilder();
                     String line;
                     while ((line = br.readLine()) != null) {
@@ -156,6 +157,7 @@ public class NotesActivity extends GrassActivity {
             for (final NoteTO noteTO : notes) {
                 TableRow row = new TableRow(this);
                 tableLayout.addView(row);
+                row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
 
                 CheckBox checkBox = new CheckBox(this);
                 checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -177,10 +179,46 @@ public class NotesActivity extends GrassActivity {
                 });
                 checkBox.setChecked(true);
                 row.addView(checkBox);
+                checkBox.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT ));
 
                 TextView bodyTextView = new TextView(this);
-                bodyTextView.setText(noteTO.getText());
+                bodyTextView.setText(noteTO.getPreview());
                 row.addView(bodyTextView);
+                bodyTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT));
+
+                Button editBtn = new Button(this);
+                editBtn.setText("Upravit");
+                editBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(NotesActivity.this, NoteActivity.class);
+                        intent.putExtra("id", noteTO.getId());
+                        startActivity(intent);
+                    }
+                });
+                row.addView(editBtn);
+                editBtn.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                Button deleteBtn = new Button(this);
+                deleteBtn.setText("Smazat");
+                deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(NotesActivity.this)
+                                .setTitle("Smazání poznámky")
+                                .setMessage("Opravdu smazat poznámku?")
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        File toDeleteFile = new File(directory, noteTO.getId());
+                                        toDeleteFile.delete();
+                                        constructTable();
+                                    }
+                                }).setNegativeButton(android.R.string.no, null).show();
+                    }
+                });
+                row.addView(deleteBtn);
+                deleteBtn.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
             }
         }
 
