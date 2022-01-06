@@ -1,4 +1,4 @@
-package cz.gattserver.android.articles;
+package cz.gattserver.android.sms;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

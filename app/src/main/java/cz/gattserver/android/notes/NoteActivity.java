@@ -1,4 +1,4 @@
-package cz.gattserver.android.articles;
+package cz.gattserver.android.notes;
 
 import android.app.AlertDialog;
 import android.content.Intent;

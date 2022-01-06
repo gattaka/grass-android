@@ -1,4 +1,4 @@
-package cz.gattserver.android.articles;
+package cz.gattserver.android.notes;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

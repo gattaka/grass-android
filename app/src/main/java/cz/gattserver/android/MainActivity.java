@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.gattserver.android.articles.ArticlesMenuActivity;
+import cz.gattserver.android.articles.ArticlesActivity;
 import cz.gattserver.android.books.BooksActivity;
 import cz.gattserver.android.campgames.CampgamesActivity;
 import cz.gattserver.android.common.ButtonDefinition;
@@ -23,10 +23,13 @@ import cz.gattserver.android.common.URLPostTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
 import cz.gattserver.android.common.URLTaskParamTO;
 import cz.gattserver.android.drinks.DrinksActivity;
+import cz.gattserver.android.notes.NotesActivity;
 import cz.gattserver.android.photogallery.PhotoMenuActivity;
 import cz.gattserver.android.recipes.RecipesActivity;
+import cz.gattserver.android.sms.MessagesActivity;
 import cz.gattserver.android.songs.SongsActivity;
 import cz.gattserver.android.login.LoginActivity;
+import cz.gattserver.android.tts.TTSActivity;
 
 public class MainActivity extends GrassActivity {
 
@@ -44,7 +47,21 @@ public class MainActivity extends GrassActivity {
         buttonDefinitions.add(new ButtonDefinition("Články", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ArticlesMenuActivity.class);
+                Intent intent = new Intent(MainActivity.this, ArticlesActivity.class);
+                startActivity(intent);
+            }
+        }));
+        buttonDefinitions.add(new ButtonDefinition("Poznámky", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NotesActivity.class);
+                startActivity(intent);
+            }
+        }));
+        buttonDefinitions.add(new ButtonDefinition("Upload SMS", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MessagesActivity.class);
                 startActivity(intent);
             }
         }));
@@ -87,6 +104,13 @@ public class MainActivity extends GrassActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BooksActivity.class);
+                startActivity(intent);
+            }
+        }));
+        buttonDefinitions.add(new ButtonDefinition("TTS", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TTSActivity.class);
                 startActivity(intent);
             }
         }));
