@@ -17,6 +17,8 @@
     <string name="rum_type">Typ:</string>
     <string name="whiskey_years">Stáří:</string>
     <string name="whiskey_type">Typ:</string>
+    <string name="wine_year">Rok:</string>
+    <string name="wine_winery">Vinařství:</string>
     <string name="book_author">Autor:</string>
     <string name="released">Vydáno:</string>
     <string name="title_activity_login">Přihlášení</string>

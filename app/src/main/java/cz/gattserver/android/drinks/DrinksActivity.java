@@ -45,6 +45,13 @@ public class DrinksActivity extends GrassActivity {
                 startActivity(intent);
             }
         }));
+        buttonDefinitions.add(new ButtonDefinition("Vína", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DrinksActivity.this, WinesActivity.class);
+                startActivity(intent);
+            }
+        }));
 
         LinearLayout mainLayout = findViewById(R.id.drinksLayout);
         for (ButtonDefinition bdef : buttonDefinitions) {

@@ -16,33 +16,33 @@ import cz.gattserver.android.Config;
 import cz.gattserver.android.R;
 import cz.gattserver.android.common.FormatUtils;
 import cz.gattserver.android.common.GrassActivity;
+import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLGetTask;
 import cz.gattserver.android.common.URLTaskInfoBundle;
-import cz.gattserver.android.common.OnSuccessAction;
 import cz.gattserver.android.common.URLTaskParamTO;
 
-public class WhiskeyActivity extends GrassActivity {
+public class WineActivity extends GrassActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_whiskey);
+        setContentView(R.layout.activity_wine);
 
         hideActionBar();
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
 
-        URLGetTask<WhiskeyActivity> fetchTask = new URLGetTask<>(this, new OnSuccessAction<WhiskeyActivity>() {
+        URLGetTask<WineActivity> fetchTask = new URLGetTask<>(this, new OnSuccessAction<WineActivity>() {
             @Override
-            public void run(WhiskeyActivity urlTaskClient, URLTaskInfoBundle bundle) {
+            public void run(WineActivity urlTaskClient, URLTaskInfoBundle bundle) {
                 urlTaskClient.init(bundle.getResultAsStringUTF());
             }
         });
 
-        fetchTask.execute(new URLTaskParamTO(Config.DRINKS_WHISKEY_DETAIL_RESOURCE + "?id=" + id));
+        fetchTask.execute(new URLTaskParamTO(Config.DRINKS_WINE_DETAIL_RESOURCE + "?id=" + id));
 
-        Log.d("WhiskeyActivity", "The onCreate() event");
+        Log.d("WineActivity", "The onCreate() event");
     }
 
     private String dashIfNullByJSON(JSONObject jsonObject, String key) throws JSONException {
@@ -63,11 +63,11 @@ public class WhiskeyActivity extends GrassActivity {
             TextView countryText = findViewById(R.id.drinkCountry);
             countryText.setText(dashIfNullByJSON(jsonObject, "country"));
 
-            TextView whiskeyYearsText = findViewById(R.id.whiskeyYears);
-            whiskeyYearsText.setText(dashIfNullByJSON(jsonObject, "years"));
+            TextView wineryText = findViewById(R.id.wineWinery);
+            wineryText.setText(dashIfNullByJSON(jsonObject, "winery"));
 
-            TextView whiskeyTypeText = findViewById(R.id.whiskeyType);
-            whiskeyTypeText.setText(dashIfNullByJSON(jsonObject, "whiskeyType"));
+            TextView wineYearText = findViewById(R.id.wineYear);
+            wineYearText.setText(dashIfNullByJSON(jsonObject, "year"));
 
             TextView alcoholText = findViewById(R.id.drinkAlcohol);
             alcoholText.setText(getString(R.string.drink_alcohol_format, dashIfNullByJSON(jsonObject, "alcohol")));
@@ -81,7 +81,7 @@ public class WhiskeyActivity extends GrassActivity {
             drinkImage.setImageBitmap(decodedByte);
 
         } catch (JSONException e) {
-            Log.e("WhiskeyActivity", "JSONObject", e);
+            Log.e("WineActivity", "JSONObject", e);
         }
     }
 }

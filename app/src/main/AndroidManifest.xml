@@ -33,6 +33,8 @@
         <activity android:name=".drinks.RumActivity" />
         <activity android:name=".drinks.WhiskiesActivity" />
         <activity android:name=".drinks.WhiskeyActivity" />
+        <activity android:name=".drinks.WinesActivity" />
+        <activity android:name=".drinks.WineActivity" />
         <activity android:name=".photogallery.PhotoMenuActivity" />
         <activity android:name=".photogallery.PhotogalleriesActivity" />
         <activity android:name=".photogallery.PhotogalleryActivity" />
