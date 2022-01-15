@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import cz.gattserver.android.common.CustomListView;
 import cz.gattserver.android.common.URLTaskParamTO;
 
 public abstract class FilteredLazyListActivity<T> extends LazyListActivity<T> {
@@ -55,7 +56,7 @@ public abstract class FilteredLazyListActivity<T> extends LazyListActivity<T> {
     }
 
     private void createAndPlaceListView() {
-        ListView listView = createListView();
+        CustomListView listView = createListView();
         layout.addView(listView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 

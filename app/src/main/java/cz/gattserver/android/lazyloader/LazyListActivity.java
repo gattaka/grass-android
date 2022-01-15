@@ -13,12 +13,13 @@ import android.widget.ProgressBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.gattserver.android.common.CustomListView;
 import cz.gattserver.android.common.GrassActivity;
 import cz.gattserver.android.common.URLTaskParamTO;
 
 public abstract class LazyListActivity<T> extends GrassActivity {
 
-    ListView listView;
+    CustomListView listView;
     ProgressBar progressBar;
     ArrayAdapter<T> adapter;
 
@@ -69,8 +70,8 @@ public abstract class LazyListActivity<T> extends GrassActivity {
         setContentView(listView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
-    protected ListView createListView() {
-        listView = new ListView(this);
+    protected CustomListView createListView() {
+        listView = new CustomListView(this);
         listView.addFooterView(progressBar = new ProgressBar(this));
         adapter = createArrayAdapter();
         listView.setAdapter(adapter);
