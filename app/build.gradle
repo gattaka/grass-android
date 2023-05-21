@@ -18,6 +18,7 @@ android {
     }
     productFlavors {
     }
+    namespace 'cz.gattserver.android'
 }
 
 dependencies {

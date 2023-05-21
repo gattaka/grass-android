@@ -41,8 +41,7 @@ public class PhotoArrayAdapter extends ArrayAdapter<PhotoTO> {
 
     @Override
     @NonNull
-    public View getView(int position, @Nullable View convertView,
-                        @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         return createViewFromResource(LayoutInflater.from(getContext()), position, convertView, parent, resource);
     }
 
@@ -60,12 +59,7 @@ public class PhotoArrayAdapter extends ArrayAdapter<PhotoTO> {
         final PhotoTO item = getItem(position);
         if (item != null) {
             CheckBox checkBox = view.findViewById(R.id.chk);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    checkBoxListener.onCheckedChanged(buttonView, item, isChecked);
-                }
-            });
+            checkBox.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> checkBoxListener.onCheckedChanged(buttonView, item, isChecked));
             createListener.onCreate(checkBox, item);
 
             ImageView imageView = view.findViewById(R.id.itemImage);
@@ -91,5 +85,4 @@ public class PhotoArrayAdapter extends ArrayAdapter<PhotoTO> {
 
         return view;
     }
-
 }

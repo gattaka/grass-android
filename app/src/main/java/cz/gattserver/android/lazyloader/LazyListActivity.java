@@ -76,14 +76,11 @@ public abstract class LazyListActivity<T> extends GrassActivity {
         adapter = createArrayAdapter();
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (LazyListActivity.this.adapter.getCount() <= position)
-                    return;
-                T item = LazyListActivity.this.adapter.getItem(position);
-                LazyListActivity.this.onItemClick(item);
-            }
+        listView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
+            if (LazyListActivity.this.adapter.getCount() <= position)
+                return;
+            T item = LazyListActivity.this.adapter.getItem(position);
+            LazyListActivity.this.onItemClick(item);
         });
         return listView;
     }

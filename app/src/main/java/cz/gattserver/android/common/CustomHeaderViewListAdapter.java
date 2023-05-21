@@ -21,7 +21,7 @@ class CustomHeaderViewListAdapter extends HeaderViewListAdapter {
     @Override
     public boolean isEnabled(int position){
         try {
-            return position > 0 || getHeadersCount() > 0 ? super.isEnabled(position) : false;
+            return position >= 0 || getHeadersCount() > 0 ? super.isEnabled(position) : false;
         } catch (IndexOutOfBoundsException e) {
             // nedaří se mi zjistit, proč se tohle občas stane
             return false;

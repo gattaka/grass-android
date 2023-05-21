@@ -104,50 +104,40 @@ public class NotesActivity extends GrassActivity {
             }
 
             final Button sendBtn = new Button(this);
-            sendBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(NotesActivity.this)
-                            .setTitle("Odeslání poznámek")
-                            .setMessage("Opravdu odeslat poznámky?")
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    URLPostTask<NotesActivity> uploadTask = new URLPostTask<>(NotesActivity.this,
-                                            new OnSuccessAction<NotesActivity>() {
-                                                @Override
-                                                public void run(NotesActivity urlTaskClient, URLTaskInfoBundle result) {
-                                                    if (result.isSuccess()) {
-                                                        if (result.getResponseCode() == 200) {
-                                                            Toast.makeText(urlTaskClient, "Poznámky byly úspěšně nahrány", Toast.LENGTH_SHORT).show();
-                                                        } else {
-                                                            new AlertDialog.Builder(NotesActivity.this)
-                                                                    .setTitle("Chyba")
-                                                                    .setMessage("Poznámky se nezdařilo odeslat -- server code: " + result.getResponseCode())
-                                                                    .setIcon(android.R.drawable.ic_dialog_alert).show();
-                                                        }
-                                                    } else {
-                                                        new AlertDialog.Builder(NotesActivity.this)
-                                                                .setTitle("Chyba")
-                                                                .setMessage("Poznámky se nezdařilo odeslat: " + result.getError().getLocalizedMessage())
-                                                                .setIcon(android.R.drawable.ic_dialog_alert).show();
-                                                    }
-                                                }
-                                            });
-                                    StringBuilder sb = new StringBuilder();
-                                    SimpleDateFormat sdf = new SimpleDateFormat("d.M.yyyy HH:mm");
-                                    for (NoteTO noteTO : choosenNotes.values()) {
-                                        sb.append(sdf.format(noteTO.getDate()));
-                                        sb.append("\n");
-                                        sb.append(noteTO.getText());
-                                        sb.append("\n\n");
+            sendBtn.setOnClickListener(v -> new AlertDialog.Builder(NotesActivity.this)
+                    .setTitle("Odeslání poznámek")
+                    .setMessage("Opravdu odeslat poznámky?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                        URLPostTask<NotesActivity> uploadTask = new URLPostTask<>(NotesActivity.this,
+                                (urlTaskClient, result) -> {
+                                    if (result.isSuccess()) {
+                                        if (result.getResponseCode() == 200) {
+                                            Toast.makeText(urlTaskClient, "Poznámky byly úspěšně nahrány", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            new AlertDialog.Builder(NotesActivity.this)
+                                                    .setTitle("Chyba")
+                                                    .setMessage("Poznámky se nezdařilo odeslat -- server code: " + result.getResponseCode())
+                                                    .setIcon(android.R.drawable.ic_dialog_alert).show();
+                                        }
+                                    } else {
+                                        new AlertDialog.Builder(NotesActivity.this)
+                                                .setTitle("Chyba")
+                                                .setMessage("Poznámky se nezdařilo odeslat: " + result.getError().getLocalizedMessage())
+                                                .setIcon(android.R.drawable.ic_dialog_alert).show();
                                     }
-                                    uploadTask.execute(new URLTaskParamTO(Config.ARTICLES_CREATE, LoginUtils.getSessionid(NotesActivity.this)).setParams("text", sb.toString()));
-                                    constructTable();
-                                }
-                            }).setNegativeButton(android.R.string.no, null).show();
-                }
-            });
+                                });
+                        StringBuilder sb = new StringBuilder();
+                        SimpleDateFormat sdf = new SimpleDateFormat("d.M.yyyy HH:mm");
+                        for (NoteTO noteTO : choosenNotes.values()) {
+                            sb.append(sdf.format(noteTO.getDate()));
+                            sb.append("\n");
+                            sb.append(noteTO.getText());
+                            sb.append("\n\n");
+                        }
+                        uploadTask.execute(new URLTaskParamTO(Config.ARTICLES_CREATE, LoginUtils.getSessionid(NotesActivity.this)).setParams("text", sb.toString()));
+                        constructTable();
+                    }).setNegativeButton(android.R.string.no, null).show());
             final String btnCaptionPrefix = "Odeslat na server";
             sendBtn.setGravity(Gravity.CENTER);
             sendBtn.setEnabled(false);
@@ -159,21 +149,18 @@ public class NotesActivity extends GrassActivity {
                 row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT));
 
                 CheckBox checkBox = new CheckBox(this);
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
-                            choosenNotes.put(noteTO.getId(), noteTO);
-                        } else {
-                            choosenNotes.remove(noteTO.getId());
-                        }
-                        if (choosenNotes.isEmpty()) {
-                            sendBtn.setText(btnCaptionPrefix);
-                            sendBtn.setEnabled(false);
-                        } else {
-                            sendBtn.setText(btnCaptionPrefix + " (" + choosenNotes.size() + ")");
-                            sendBtn.setEnabled(true);
-                        }
+                checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if (isChecked) {
+                        choosenNotes.put(noteTO.getId(), noteTO);
+                    } else {
+                        choosenNotes.remove(noteTO.getId());
+                    }
+                    if (choosenNotes.isEmpty()) {
+                        sendBtn.setText(btnCaptionPrefix);
+                        sendBtn.setEnabled(false);
+                    } else {
+                        sendBtn.setText(btnCaptionPrefix + " (" + choosenNotes.size() + ")");
+                        sendBtn.setEnabled(true);
                     }
                 });
                 checkBox.setChecked(true);
@@ -187,41 +174,28 @@ public class NotesActivity extends GrassActivity {
 
                 Button editBtn = new Button(this);
                 editBtn.setText("Upravit");
-                editBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(NotesActivity.this, NoteActivity.class);
-                        intent.putExtra("id", noteTO.getId());
-                        startActivity(intent);
-                    }
+                editBtn.setOnClickListener(v -> {
+                    Intent intent = new Intent(NotesActivity.this, NoteActivity.class);
+                    intent.putExtra("id", noteTO.getId());
+                    startActivity(intent);
                 });
                 row.addView(editBtn);
                 editBtn.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
 
                 Button deleteBtn = new Button(this);
                 deleteBtn.setText("Smazat");
-                deleteBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new AlertDialog.Builder(NotesActivity.this)
-                                .setTitle("Smazání poznámky")
-                                .setMessage("Opravdu smazat poznámku?")
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int whichButton) {
-                                        File toDeleteFile = new File(directory, noteTO.getId());
-                                        toDeleteFile.delete();
-                                        constructTable();
-                                    }
-                                }).setNegativeButton(android.R.string.no, null).show();
-                    }
-                });
+                deleteBtn.setOnClickListener(v -> new AlertDialog.Builder(NotesActivity.this)
+                        .setTitle("Smazání poznámky")
+                        .setMessage("Opravdu smazat poznámku?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                            File toDeleteFile = new File(directory, noteTO.getId());
+                            toDeleteFile.delete();
+                            constructTable();
+                        }).setNegativeButton(android.R.string.no, null).show());
                 row.addView(deleteBtn);
                 deleteBtn.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
             }
         }
-
     }
-
-
 }

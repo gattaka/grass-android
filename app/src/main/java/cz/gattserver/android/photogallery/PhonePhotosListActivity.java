@@ -134,67 +134,49 @@ public class PhonePhotosListActivity extends GrassActivity {
 
         final Button selectAllBtn = findViewById(R.id.phonePhotosListSelectAllButton);
         selectAllBtn.setText("Vybrat vše");
-        selectAllBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<PhotoTO> items = fetchItems(0, totalCount, false);
-                for (PhotoTO item : items) {
-                    choosenPhotos.put(item.getId(), item);
-                }
+        selectAllBtn.setOnClickListener(v -> {
+            List<PhotoTO> items = fetchItems(0, totalCount, false);
+            for (PhotoTO item : items)
+                choosenPhotos.put(item.getId(), item);
 
-                int itemCount = listView.getCount();
-                for (int i = 0; i < itemCount; i++)
-                    listView.setItemChecked(i, true);
-            }
+            int itemCount = listView.getCount();
+            for (int i = 0; i < itemCount; i++)
+                listView.setItemChecked(i, true);
         });
 
         final Button deselectAllBtn = findViewById(R.id.phonePhotosListDeselectAllButton);
         deselectAllBtn.setText("Nevybrat nic");
-        deselectAllBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choosenPhotos.clear();
+        deselectAllBtn.setOnClickListener(v -> {
+            choosenPhotos.clear();
 
-                int itemCount = listView.getCount();
-                for (int i = 0; i < itemCount; i++)
-                    listView.setItemChecked(i, false);
-            }
+            int itemCount = listView.getCount();
+            for (int i = 0; i < itemCount; i++)
+                listView.setItemChecked(i, false);
         });
 
         listView = findViewById(R.id.phonePhotosList);
         listView.addFooterView(progressBar = new ProgressBar(this));
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int pos = listView.getPositionForView(view);
-                PhotoTO photo = (PhotoTO) parent.getItemAtPosition(pos);
-                Toast.makeText(PhonePhotosListActivity.this, "Photo ID[" + photo.getId() + "] Name[" + photo.getTitle() + "]", Toast.LENGTH_SHORT).show();
-            }
+        listView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
+            int pos = listView.getPositionForView(view);
+            PhotoTO photo = (PhotoTO) parent.getItemAtPosition(pos);
+            Toast.makeText(PhonePhotosListActivity.this, "Photo ID[" + photo.getId() + "] Name[" + photo.getTitle() + "]", Toast.LENGTH_SHORT).show();
         });
 
-        adapter = new PhotoArrayAdapter(this, R.layout.photo_listview_row, new PhotoArrayAdapter.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, PhotoTO item, boolean isChecked) {
-                if (isChecked) {
-                    choosenPhotos.put(item.getId(), item);
-                } else {
-                    choosenPhotos.remove(item.getId());
-                }
-                if (choosenPhotos.isEmpty()) {
-                    sendBtn.setText(btnCaptionPrefix);
-                    sendBtn.setEnabled(false);
-                } else {
-                    sendBtn.setText(btnCaptionPrefix + " (" + choosenPhotos.size() + ")");
-                    sendBtn.setEnabled(true);
-                }
+        adapter = new PhotoArrayAdapter(this, R.layout.photo_listview_row, (CompoundButton buttonView, PhotoTO item, boolean isChecked) -> {
+            if (isChecked) {
+                choosenPhotos.put(item.getId(), item);
+            } else {
+                choosenPhotos.remove(item.getId());
             }
-        }, new PhotoArrayAdapter.OnCheckBoxCreateListener() {
-            @Override
-            public void onCreate(CompoundButton buttonView, PhotoTO item) {
-                buttonView.setChecked(choosenPhotos.containsKey(item.getId()));
+            if (choosenPhotos.isEmpty()) {
+                sendBtn.setText(btnCaptionPrefix);
+                sendBtn.setEnabled(false);
+            } else {
+                sendBtn.setText(btnCaptionPrefix + " (" + choosenPhotos.size() + ")");
+                sendBtn.setEnabled(true);
             }
-        });
+        }, (CompoundButton buttonView, PhotoTO item) -> buttonView.setChecked(choosenPhotos.containsKey(item.getId())));
         listView.setAdapter(adapter);
         listView.setOnScrollListener(new LazyLoaderScrollListener() {
             @Override
